@@ -35,3 +35,7 @@ Le site de la LONAB peut refuser les connexions automatiques. Regardez le journa
 - Les poids des critères (forme, marché, classe, poids, aptitudes, entourage) se règlent sur le site.
 - Les valeurs par défaut se changent dans `engine.js`, tableau `BASES_FACTORS`. Elles ont été réglées sur 25 courses (forme 30, marché 30, classe 10, aptitudes 20, le reste à 0).
 - Vérifiez que la LONAB accepte la reprise de ses informations sur votre site, et gardez le rappel de jeu responsable.
+
+## Arrivées officielles
+
+À chaque exécution, le script lit aussi les résultats du jour publiés par la LONAB (`Res41_JJ_MM_AAAA.pdf`, `Res_JJ_MM_AAAA_QUARTE.pdf`, `Res_JJ_MM_AAAA_TIERCE.pdf`) et affiche la section « Arrivées officielles » avec nos bases. Le Quarté ne donne que 4 numéros : le 5e vient du journal suivant.

@@ -58,6 +58,27 @@ async function readPdf(buf) {
   return parseJournal(pages);
 }
 
+// Résultats officiels du jour : lonab.bf/resultats-gains-pmub (Res41_JJ_MM_AAAA.pdf, Res_JJ_MM_AAAA_QUARTE.pdf, Res_JJ_MM_AAAA_TIERCE.pdf)
+const GAMES = { "4+1": "41", "Quarté": "QUARTE", "Tiercé": "TIERCE" };
+function resultUrls(d, game) {
+  const dd = pad(d.getUTCDate()), mm = pad(d.getUTCMonth() + 1), yy = d.getUTCFullYear();
+  const folder = BASE + yy + "-" + mm + "/";
+  return game === "41" ? [folder + "Res41_" + dd + "_" + mm + "_" + yy + ".pdf"] : [folder + "Res_" + dd + "_" + mm + "_" + yy + "_" + game + ".pdf"];
+}
+async function readResult(buf) {
+  const doc = await pdfjs.getDocument({ data: buf, useSystemFonts: true }).promise;
+  let txt = "";
+  for (let p = 1; p <= doc.numPages; p++) {
+    const tc = await (await doc.getPage(p)).getTextContent();
+    txt += " " + tc.items.map((i) => i.str).join(" ");
+  }
+  txt = txt.replace(/\s+/g, " ");
+  const a = txt.match(/Arriv[ée]e\s*:?\s*((?:\d{1,2}\s*[-–]\s*)+\d{1,2})/i);
+  const dm = txt.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+  if (!a || !dm) { console.log("  texte lu mais arrivée introuvable : " + txt.slice(0, 200)); return null; }
+  return { iso: dm[3] + "-" + dm[2] + "-" + dm[1], nums: a[1].split(/\s*[-–]\s*/).map(Number) };
+}
+
 async function main() {
   const store = fs.existsSync(DATA) ? JSON.parse(fs.readFileSync(DATA, "utf8")) : [];
   const ARCH = path.join(ROOT, "data", "archive.json");
@@ -120,6 +141,28 @@ async function main() {
   const BIL = path.join(ROOT, "data", "bilan.json");
   const arrivees = fs.existsSync(ARR) ? JSON.parse(fs.readFileSync(ARR, "utf8")) : {};
   const bilan = fs.existsSync(BIL) ? JSON.parse(fs.readFileSync(BIL, "utf8")) : [];
+  if (!offline) {
+    for (let back = 0; back <= 2; back++) {
+      const d = new Date(today.getTime() - back * 864e5), key = iso(d);
+      if (arrivees[key] && arrivees[key].arrivee.length >= 5) continue;
+      const c = archive.get(key);
+      const g = c && GAMES[String(c.race.jeu).split(" ·")[0]];
+      for (const game of g ? [g] : ["41", "QUARTE", "TIERCE"]) {
+        for (const u of resultUrls(d, game)) {
+          console.log("→ résultat " + key + " (" + game + ")");
+          const b = await download(u);
+          if (!b) continue;
+          let r = null;
+          try { r = await readResult(b); } catch (e) { console.log("  PDF illisible : " + e.message); }
+          if (r && r.iso === key && r.nums.length >= 3) {
+            const old = arrivees[key];
+            if (!old || old.auto && old.arrivee.length < r.nums.length) arrivees[key] = { arrivee: r.nums, source: "résultats lonab.bf", auto: true, jeu: Object.keys(GAMES).find((k) => GAMES[k] === game) };
+            console.log("  OK arrivée " + r.nums.join("-"));
+          }
+        }
+      }
+    }
+  }
   Array.from(archive.values()).forEach((c) => {
     (c.arrivals || []).forEach((a) => {
       const old = arrivees[a.iso];
@@ -143,13 +186,20 @@ async function main() {
   const arch = Array.from(archive.values()).sort((a, b) => (a.date < b.date ? -1 : 1));
   fs.writeFileSync(ARCH, JSON.stringify(arch));
 
+  // Dernières arrivées affichées sur le site
+  const arrivList = Object.keys(arrivees).sort().reverse().slice(0, 8).map((k) => {
+    const c = archive.get(k);
+    const e = { date: k, jeu: arrivees[k].jeu || (c ? String(c.race.jeu).split(" ·")[0] : ""), race: c ? c.race.titre : "", arrivee: arrivees[k].arrivee };
+    if (c) e.bases = E.basesPicks(JSON.parse(JSON.stringify(c.horses)), c, E.basesWeights()).top.map((h) => h.n);
+    return e;
+  });
   const json = (x) => JSON.stringify(x).replace(/</g, "\\u003c");
   fs.mkdirSync(path.dirname(DATA), { recursive: true });
   fs.writeFileSync(DATA, JSON.stringify(list));
   const tpl = fs.readFileSync(path.join(ROOT, "template.html"), "utf8");
-  fs.writeFileSync(path.join(ROOT, "index.html"), tpl.replace("__COURSES_JSON__", () => json(list)).replace("__BILAN_JSON__", () => json(bilan)));
+  fs.writeFileSync(path.join(ROOT, "index.html"), tpl.replace("__COURSES_JSON__", () => json(list)).replace("__BILAN_JSON__", () => json(bilan)).replace("__ARRIVEES_JSON__", () => json(arrivList)));
   console.log("Site mis à jour : " + list.map((c) => c.date).join(", "));
 }
 
-module.exports = { candidates: candidates };
+module.exports = { candidates: candidates, readResult: readResult };
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });

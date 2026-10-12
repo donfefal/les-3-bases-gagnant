@@ -147,6 +147,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       <a href="#bilan">Bilan</a>
       <a href="#autre">Importer un journal</a>
       <a href="#methode">Méthode</a>
+      <a href="#arrivees">Arrivées</a>
       <a href="#resultat">Dernier résultat</a>
     </nav>
   </header>
@@ -256,6 +257,17 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       </ol>
     </section>
 
+    <section id="arrivees">
+      <h2>Arrivées officielles</h2>
+      <p class="lead">Les arrivées des dernières courses, relevées sur les résultats publiés par la LONAB. Nos bases sont affichées en vert quand elles sont arrivées.</p>
+      <div class="tablebox">
+        <table>
+          <thead><tr><th>Date</th><th>Jeu</th><th>Arrivée</th><th>Nos bases</th></tr></thead>
+          <tbody id="arriv-body"></tbody>
+        </table>
+      </div>
+    </section>
+
     <section id="resultat">
       <h2>Dernier résultat publié</h2>
       <p class="lead" id="res-lead"></p>
@@ -288,6 +300,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
 (function () {
   var COURSES = __COURSES_JSON__;
   var BILAN = __BILAN_JSON__;
+  var ARRIVEES = __ARRIVEES_JSON__;
   function todayIso() { return new Date().toISOString().slice(0, 10); }
   function pickCourse() { var t = todayIso(), a = COURSES.filter(function (c) { return c.date >= t; }); return a.length ? a[0] : COURSES[COURSES.length - 1]; }
   var DEFAULT_DATA = pickCourse();
@@ -529,6 +542,15 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
     }).join("");
   }
 
+  function renderArrivees() {
+    $("arrivees").hidden = !ARRIVEES.length;
+    $("arriv-body").innerHTML = ARRIVEES.map(function (a) {
+      var lab = new Date(a.date + "T12:00:00Z").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+      var arr = a.arrivee.map(function (x) { return a.bases && a.bases.indexOf(x) > -1 ? '<b class="hit">' + x + "</b>" : String(x); }).join(" · ");
+      return "<tr><td>" + esc(lab) + "</td><td>" + esc(a.jeu || "") + '</td><td class="num">' + arr + '</td><td class="num">' + (a.bases ? a.bases.join(" · ") : "—") + "</td></tr>";
+    }).join("");
+  }
+
   function renderDays() {
     var t = todayIso(), tm = new Date(Date.now() + 864e5).toISOString().slice(0, 10), el = $("days");
     el.hidden = COURSES.length < 2;
@@ -543,6 +565,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
   $("in-titre").value = DEFAULT_DATA.race.titre; $("in-details").value = DEFAULT_DATA.race.details;
   renderDays();
   renderBilan();
+  renderArrivees();
   render();
 })();
 </script>
