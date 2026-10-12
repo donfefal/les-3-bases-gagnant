@@ -1,0 +1,33 @@
+name: Mise à jour quotidienne
+
+on:
+  schedule:
+    - cron: "0 6,16,20 * * *"   # 6 h, 16 h et 20 h (heure du Burkina = UTC)
+  workflow_dispatch:
+  push:
+    paths:
+      - "journaux/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mise-a-jour
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: node scripts/update.cjs
+      - name: Publier les changements
+        run: |
+          git config user.name "Les 3 Bases Gagnant"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || (git commit -m "Mise à jour des courses" && git push)

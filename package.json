@@ -1,0 +1,12 @@
+{
+  "name": "les-3-bases-gagnant",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site de pronostics 4+1 mis à jour chaque jour depuis le journal hippique de la LONAB",
+  "scripts": {
+    "update": "node scripts/update.cjs"
+  },
+  "dependencies": {
+    "pdfjs-dist": "3.11.174"
+  }
+}

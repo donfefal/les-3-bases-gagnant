@@ -1,0 +1,548 @@
+<title>Les 3 Bases Gagnant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Concept : une carte de course. Fond craie verdâtre, bandeau gazon, numéros de selle comme signature. */
+:root {
+  --bg: #eef1ec;
+  --surface: #ffffff;
+  --fg: #151a17;
+  --muted: #55605a;
+  --line: #cfd6cf;
+  --turf: #1f4d3a;
+  --turf-fg: #f1f5ef;
+  --silk: #e8a900;
+  --silk-fg: #1a1400;
+  --danger: #a3261c;
+  --c1: #c8372d;
+  --c2: #ffffff;
+  --c2-fg: #151a17;
+  --c3: #2a5fb0;
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101512; --surface: #18201b; --fg: #eaf0ea; --muted: #9aa89f; --line: #2c372f;
+    --turf: #0f2b20; --turf-fg: #eaf0ea; --silk: #f0b81c; --silk-fg: #1a1400; --danger: #ff8a7d;
+    --c1: #e0584d; --c3: #5b8fe0; --c2: #f4f4f0; --c2-fg: #151a17;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101512; --surface: #18201b; --fg: #eaf0ea; --muted: #9aa89f; --line: #2c372f;
+  --turf: #0f2b20; --turf-fg: #eaf0ea; --silk: #f0b81c; --silk-fg: #1a1400; --danger: #ff8a7d;
+  --c1: #e0584d; --c3: #5b8fe0; --c2: #f4f4f0; --c2-fg: #151a17;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.55; padding-inline: 16px; }
+.wrap { max-width: 64rem; margin-inline: auto; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--silk); outline-offset: 2px; }
+
+.top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding-block: 18px; }
+.brand { font-family: var(--display); font-weight: 800; font-size: 1.5rem; letter-spacing: .02em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.brand .dots { display: flex; gap: 4px; }
+.dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 1px solid var(--line); }
+.d1 { background: var(--c1); } .d2 { background: var(--c2); } .d3 { background: var(--c3); }
+nav { display: flex; flex-wrap: wrap; gap: 6px 20px; font-weight: 600; font-size: .95rem; }
+nav a { text-decoration: none; padding-block: 4px; border-bottom: 2px solid transparent; }
+nav a:hover { border-bottom-color: var(--silk); }
+
+.hero { background: var(--turf); color: var(--turf-fg); border-radius: 6px; padding: clamp(24px, 5vw, 48px); display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: center; }
+.eyebrow { font-family: var(--mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--silk); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 9vw, 4.8rem); line-height: .95; margin: 8px 0 14px; text-transform: uppercase; text-wrap: balance; }
+.hero p { margin: 0 0 20px; max-width: 34rem; opacity: .92; }
+.btn { display: inline-block; background: var(--silk); color: var(--silk-fg); font: inherit; font-weight: 600; text-decoration: none; padding: 12px 20px; border-radius: 4px; border: 0; cursor: pointer; }
+.btn:hover { filter: brightness(1.08); }
+.btn.alt { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+.cloths { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cloth { width: clamp(76px, 22vw, 108px); aspect-ratio: 3/4; border-radius: 6px; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 12vw, 4.8rem); box-shadow: 0 2px 0 rgba(0,0,0,.25); position: relative; }
+.cloth small { position: absolute; bottom: 8px; font-family: var(--mono); font-size: .62rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+.k1 { background: var(--c1); color: #fff; } .k2 { background: var(--c2); color: var(--c2-fg); } .k3 { background: var(--c3); color: #fff; }
+
+section { padding-block: clamp(36px, 7vw, 64px); }
+h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem, 5vw, 2.6rem); line-height: 1.05; margin: 0 0 8px; text-transform: uppercase; text-wrap: balance; }
+h3 { text-wrap: balance; }
+.lead { color: var(--muted); max-width: 40rem; margin: 0 0 24px; }
+.tag { display: inline-block; font-family: var(--mono); font-size: .75rem; padding: 3px 8px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); background: var(--surface); }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.race-head { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; align-items: baseline; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.race-head strong { font-family: var(--display); font-size: 1.4rem; text-transform: uppercase; letter-spacing: .02em; }
+.race-meta { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+.bases { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
+.base { padding: 20px; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; align-items: start; border-bottom: 1px solid var(--line); min-width: 0; }
+.base .cloth { width: 64px; font-size: 2.4rem; grid-row: span 2; }
+.base h3 { margin: 0; font-family: var(--display); font-size: 1.5rem; text-transform: uppercase; line-height: 1.1; }
+.base .who { font-family: var(--mono); font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; }
+.base details { grid-column: 1 / -1; }
+.base summary { cursor: pointer; font-weight: 600; font-size: .95rem; padding-block: 4px; }
+.base details p { margin: 6px 0 0; color: var(--muted); font-size: .95rem; }
+.extras { padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: .95rem; border-top: 1px solid var(--line); }
+.extras b { font-family: var(--mono); font-weight: 500; }
+
+.tablebox { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-top: 16px; }
+table { border-collapse: collapse; width: 100%; min-width: 42rem; font-size: .95rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-family: var(--mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+.scorecell { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.bar { width: 72px; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; display: inline-block; }
+.bar i { display: block; height: 100%; background: var(--turf); }
+
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 0; margin: 16px 0 0; }
+.fact { padding: 14px 20px; border-bottom: 1px solid var(--line); min-width: 0; }
+.fact dt { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.fact dd { margin: 4px 0 0; font-weight: 600; overflow-wrap: anywhere; }
+
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px; min-width: 0; }
+.steps h3 { margin: 0 0 6px; font-family: var(--display); font-size: 1.35rem; text-transform: uppercase; }
+.steps p { margin: 0; color: var(--muted); font-size: .96rem; }
+
+.panel { padding: 20px; display: grid; gap: 16px; }
+.sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 16px 24px; }
+.slider { display: grid; gap: 4px; min-width: 0; }
+.slider label { display: flex; justify-content: space-between; font-weight: 600; font-size: .95rem; }
+.slider output { font-family: var(--mono); color: var(--muted); }
+input[type=range] { width: 100%; accent-color: var(--turf); }
+input[type=text], textarea { width: 100%; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; }
+textarea { font-family: var(--mono); font-size: .8rem; line-height: 1.5; min-height: 12rem; resize: vertical; white-space: pre; overflow-x: auto; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-weight: 600; font-size: .95rem; }
+.hint { color: var(--muted); font-size: .9rem; margin: 0; }
+.hint code { font-family: var(--mono); font-size: .85em; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.err { color: var(--danger); font-weight: 600; margin: 0; }
+.status { margin: 0; color: var(--muted); font-size: .95rem; }
+.drop { border: 2px dashed var(--line); border-radius: 6px; padding: 22px; display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+.drop.over { border-color: var(--turf); background: var(--bg); }
+.vh { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.vh:focus-visible + label { outline: 3px solid var(--silk); outline-offset: 2px; }
+details.manual summary { cursor: pointer; font-weight: 600; }
+details.manual .field { margin-top: 12px; }
+
+.days { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+.day { font: inherit; font-weight: 600; font-size: .9rem; padding: 8px 14px; border-radius: 4px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.day[aria-pressed="true"] { background: var(--turf); color: var(--turf-fg); border-color: var(--turf); }
+.hit { background: var(--turf); color: var(--turf-fg); border-radius: 3px; padding: 0 6px; }
+.near { border-bottom: 2px solid var(--silk); }
+.safe { border-left: 6px solid var(--silk); background: var(--surface); padding: 18px 20px; border-radius: 0 6px 6px 0; border-top: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.safe h2 { font-size: 1.6rem; }
+.safe p { margin: 0; color: var(--muted); max-width: 44rem; }
+footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var(--muted); font-size: .9rem; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+@media (prefers-reduced-motion: no-preference) { .btn { transition: filter .15s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top" id="top"><span class="dots" aria-hidden="true"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span></span>Les 3 Bases Gagnant</a>
+    <nav aria-label="Navigation principale">
+      <a href="#pronostic">Pronostic du jour</a>
+      <a href="#bilan">Bilan</a>
+      <a href="#autre">Importer un journal</a>
+      <a href="#methode">Méthode</a>
+      <a href="#resultat">Dernier résultat</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <div class="eyebrow" id="eyebrow">4+1</div>
+        <h1>Trois bases. Une lecture claire de la course.</h1>
+        <p>Le journal hippique de la LONAB passe dans une grille d'analyse qui note chaque partant sur sa forme, le marché, ses gains, son poids, les aptitudes relevées et l'entourage. Les trois meilleurs scores deviennent les bases du jour.</p>
+        <a class="btn" href="#pronostic">Voir les bases du jour</a>
+      </div>
+      <div class="cloths" id="hero-cloths"></div>
+    </div>
+
+    <section id="pronostic">
+      <h2>Pronostic du jour</h2>
+      <p class="lead" id="lead-prono">Calculé à partir du journal officiel de la LONAB. Vérifiez toujours les partants et les non-partants avant de jouer.</p>
+
+      <div class="days" id="days" role="group" aria-label="Choisir la course" hidden></div>
+
+      <div class="card">
+        <div class="race-head" id="race-head"></div>
+        <div class="bases" id="bases"></div>
+        <div class="extras" id="extras"></div>
+      </div>
+
+      <div class="tablebox">
+        <table>
+          <caption class="hint" style="text-align:left;padding:12px 14px;caption-side:top">Classement complet des partants par score d'analyse</caption>
+          <thead><tr><th>Rang</th><th>N°</th><th>Cheval</th><th>Jockey</th><th id="th-poids">Poids</th><th>Musique</th><th>Cotes</th><th>Score</th></tr></thead>
+          <tbody id="ranking"></tbody>
+        </table>
+      </div>
+
+      <div class="card" id="facts-card" style="margin-top:16px" hidden>
+        <dl class="facts" id="facts"></dl>
+      </div>
+    </section>
+
+    <section id="bilan">
+      <h2>Bilan des bases</h2>
+      <p class="lead" id="bilan-lead"></p>
+      <div class="card" id="bilan-sum" hidden><dl class="facts" id="bilan-facts"></dl></div>
+      <div class="tablebox" id="bilan-box" hidden>
+        <table>
+          <thead><tr><th>Date</th><th>Course</th><th>Nos bases</th><th>Arrivée</th><th>Bases trouvées</th></tr></thead>
+          <tbody id="bilan-body"></tbody>
+        </table>
+      </div>
+      <p class="hint" style="margin-top:12px">* Course ayant servi à régler les poids du modèle : son résultat est donc optimiste. Fond vert : une de nos bases. Souligné : un cheval du complément ou des outsiders. « Au hasard » est le résultat attendu en choisissant les mêmes nombres de chevaux sans méthode.</p>
+    </section>
+
+    <section id="reglages">
+      <h2>Réglages de l'analyse</h2>
+      <p class="lead">Donnez plus de poids à un critère et les bases se recalculent aussitôt.</p>
+      <div class="card panel">
+        <div class="sliders" id="sliders"></div>
+        <div class="row"><button class="btn alt" type="button" id="reset-w">Valeurs par défaut</button></div>
+      </div>
+    </section>
+
+    <section id="autre">
+      <h2>Importer un journal</h2>
+      <p class="lead">Choisissez le journal hippique PDF de la LONAB (celui du jour ou de demain). Le site lit les partants, les cotes, les aptitudes, les meilleurs entraîneurs et jockeys, les horaires et le dernier résultat, puis calcule les bases. Le fichier reste dans votre navigateur.</p>
+      <div class="card panel">
+        <div class="drop" id="drop">
+          <input class="vh" type="file" id="in-pdf" accept="application/pdf,.pdf">
+          <label for="in-pdf" class="btn">Choisir le journal PDF</label>
+          <span class="hint" id="file-name">Aucun fichier choisi. Vous pouvez aussi déposer le PDF ici.</span>
+        </div>
+        <p class="status" id="status" role="status"></p>
+        <p class="err" id="err" role="alert" hidden></p>
+        <div class="row"><button class="btn alt" type="button" id="reset-data">Revenir aux courses automatiques</button></div>
+
+        <details class="manual">
+          <summary>Saisie manuelle (secours)</summary>
+          <div class="field">
+            <label for="in-titre">Nom de la course</label>
+            <input type="text" id="in-titre" value="Auteuil · Prix Montgomery (Groupe III)">
+          </div>
+          <div class="field">
+            <label for="in-details">Détails (distance, heure de départ…)</label>
+            <input type="text" id="in-details" value="Steeple-chase · 4 700 m · 16 partants · départ 13 h 15">
+          </div>
+          <div class="field">
+            <label for="in-data">Partants, un par ligne</label>
+            <textarea id="in-data" spellcheck="false"></textarea>
+            <p class="hint">Format : <code>numéro;cheval;jockey;entraîneur;poids;musique;gains;cote</code>. La musique se lit de la plus récente à la plus ancienne. La cote s'écrit <code>12/1</code> ou <code>12</code>. Sans journal, les critères d'aptitudes et d'entourage restent à zéro.</p>
+          </div>
+          <div class="row" style="margin-top:12px"><button class="btn" type="button" id="run">Calculer les bases</button></div>
+        </details>
+      </div>
+    </section>
+
+    <section id="methode">
+      <h2>Comment les bases sont choisies</h2>
+      <p class="lead">Chaque critère est noté de 0 à 1 pour tous les partants, puis les notes sont pondérées pour donner un score sur 100.</p>
+      <ol class="steps">
+        <li><h3>Forme récente</h3><p>Les cinq dernières places de la musique comptent, les plus récentes davantage. Une victoire vaut plus qu'une troisième place, un abandon ou une chute ne rapporte rien.</p></li>
+        <li><h3>Avis du marché</h3><p>Les cotes publiées reflètent le jugement des parieurs. Plus elles sont basses, plus le cheval marque de points.</p></li>
+        <li><h3>Classe</h3><p>Les gains en carrière, comparés au meilleur du lot, mesurent le niveau déjà atteint.</p></li>
+        <li><h3>Avantage de poids ou de distance</h3><p>Au galop, porter moins de kilos que ses rivaux est un atout dans un handicap. Au trot, un cheval qui part sans recul de distance est avantagé.</p></li>
+        <li><h3>Chrono (trot)</h3><p>La meilleure réduction kilométrique indique la vitesse déjà prouvée. Ce critère ne compte qu'au trot.</p></li>
+        <li><h3>Aptitudes</h3><p>Le journal classe les cinq meilleurs en forme, en classe, en progrès et en régularité. Chaque citation rapporte des points.</p></li>
+        <li><h3>Entourage</h3><p>Un jockey ou un entraîneur bien classé cette semaine, ou signalé en forme, améliore la note.</p></li>
+      </ol>
+    </section>
+
+    <section id="resultat">
+      <h2>Dernier résultat publié</h2>
+      <p class="lead" id="res-lead"></p>
+      <div class="tablebox" style="margin-top:0">
+        <table style="min-width:28rem">
+          <tbody id="res-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="jeu">
+      <div class="safe">
+        <h2>Jouer avec mesure</h2>
+        <p>Une analyse n'est jamais une garantie de gain. Fixez-vous un budget avant de jouer, ne misez que ce que vous pouvez perdre et réservez les paris aux personnes majeures.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Les 3 Bases Gagnant · Données des courses : LONAB, Journal Hippique PMU'B</span>
+    <span>Contact : à renseigner (e-mail ou WhatsApp)</span>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script src="parser.js"></script>
+<script src="engine.js"></script>
+
+<script>
+(function () {
+  var COURSES = __COURSES_JSON__;
+  var BILAN = __BILAN_JSON__;
+  function todayIso() { return new Date().toISOString().slice(0, 10); }
+  function pickCourse() { var t = todayIso(), a = COURSES.filter(function (c) { return c.date >= t; }); return a.length ? a[0] : COURSES[COURSES.length - 1]; }
+  var DEFAULT_DATA = pickCourse();
+  var FACTORS = BASES_FACTORS;
+  var APT = BASES_APT;
+  var W = {};
+  FACTORS.forEach(function (f) { W[f.k] = f.w; });
+  var state = { race: DEFAULT_DATA.race, horses: DEFAULT_DATA.horses, info: DEFAULT_DATA };
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function num(s) { return parseFloat(String(s).replace(/\s/g, "").replace(",", ".")); }
+  function ord(n) { return n === 1 ? "1er" : n + "e"; }
+  function fmt(n) { return Math.round(n).toLocaleString("fr-FR"); }
+  function kg(n) { return String(n).replace(".", ","); }
+  function chr(c) { var m = Math.floor(c / 60), r = c - m * 60; return m + "'" + (r < 10 ? "0" : "") + r.toFixed(1).replace(".", ",") + '"'; }
+  function isTrot() { return !!(state.race && state.race.type === "trot"); }
+  function poidsCell(h) { return isTrot() ? fmt(h.dist || h.poids) + " m" : kg(h.poids) + " kg"; }
+
+  function analyse(hs) { return basesAnalyse(hs, state.info, W); }
+
+  function rankBy(h, hs, fn, asc) {
+    var v = fn(h), r = 1;
+    hs.forEach(function (o) { if (o !== h && (asc ? fn(o) < v : fn(o) > v)) r++; });
+    return r;
+  }
+
+  function reasons(h, hs) {
+    var t = h.mus.split(".").slice(0, 5);
+    var w = t.filter(function (x) { return x === "1"; }).length;
+    var p = t.filter(function (x) { return x === "1" || x === "2" || x === "3"; }).length;
+    var rm = rankBy(h, hs, function (o) { return o.pm; }, false);
+    var rg = rankBy(h, hs, function (o) { return o.gains; }, false);
+    var rp = rankBy(h, hs, function (o) { return o.poids; }, true);
+    var rc = rankBy(h, hs, function (o) { return o.chrono > 0 ? o.chrono : 999; }, true);
+    var pe = [];
+    if (h.rT) pe.push("entraîneur " + h.ent + " " + ord(h.rT) + " de la semaine"); else if (h.fT) pe.push("entraîneur " + h.ent + " en forme");
+    if (h.rJ) pe.push("jockey " + h.jockey + " " + ord(h.rJ) + " de la semaine"); else if (h.fJ) pe.push("jockey " + h.jockey + " en forme");
+    var c = [
+      { k: "forme", txt: "Musique " + h.mus + " : " + p + " place" + (p > 1 ? "s" : "") + " dans les trois premiers sur ses " + t.length + " dernières sorties, dont " + w + " victoire" + (w > 1 ? "s" : "") + "." },
+      { k: "marche", txt: "Cotes " + h.coteTxt + ", " + ord(rm) + " du marché." },
+      { k: "classe", txt: fmt(h.gains) + " € de gains, " + ord(rg) + " du lot." },
+      { k: "chrono", txt: h.chrono > 0 ? "Réduction kilométrique " + chr(h.chrono) + ", " + ord(rc) + " du lot." : "" },
+      { k: "poids", txt: isTrot() ? (rp === 1 ? "Part de la distance la plus courte (" + fmt(h.poids) + " m), sans recul." : "Court " + fmt(h.poids) + " m, " + ord(rp) + " plus avantagé.") : rp === 1 ? "Porte " + kg(h.poids) + " kg, le plus léger du lot." : "Porte " + kg(h.poids) + " kg, " + ord(rp) + " plus léger." },
+      { k: "apt", txt: h.cites.length ? "Cité par le journal : " + h.cites.join(", ") + "." : "" },
+      { k: "ent", txt: pe.length ? pe.join(", ").replace(/^./, function (x) { return x.toUpperCase(); }) + "." : "" }
+    ];
+    c.forEach(function (x) { x.v = W[x.k] * h.f[x.k]; });
+    c = c.filter(function (x) { return x.txt && x.v > 0; }).sort(function (a, b) { return b.v - a.v; });
+    return c.slice(0, 2).map(function (x) { return x.txt; }).join(" ");
+  }
+
+  function list(a) { return a.length ? a.map(function (h) { return h.n; }).join(" · ") : "—"; }
+  function joinNames(a) { return a && a.length ? a.join(", ") : "—"; }
+
+  function render() {
+    var hs = state.horses, RC = state.race, info = state.info;
+    var r = analyse(hs);
+    var top = r.slice(0, 3), rest = r.slice(3);
+    var comp = rest.slice(0, 3);
+    var outs = rest.filter(function (h) { return h.cote >= 20 && comp.indexOf(h) === -1; }).slice(0, 3);
+
+    $("eyebrow").textContent = RC.jeu;
+    $("th-poids").textContent = isTrot() ? "Distance" : "Poids";
+    $("hero-cloths").setAttribute("aria-label", "Les trois bases : " + top.map(function (h) { return h.n; }).join(", "));
+    $("hero-cloths").innerHTML = top.map(function (h, i) {
+      return '<div class="cloth k' + (i + 1) + '">' + h.n + "<small>base " + (i + 1) + "</small></div>";
+    }).join("");
+
+    $("race-head").innerHTML = "<strong>" + esc(RC.titre) + '</strong><span class="race-meta">' + esc(RC.details) + (RC.arret ? " · " + esc(RC.arret) : "") + "</span>";
+
+    $("bases").innerHTML = top.map(function (h, i) {
+      return '<article class="base"><div class="cloth k' + (i + 1) + '">' + h.n + "</div><h3>" + esc(h.nom) + '</h3><div class="who">' + esc(h.jockey) + " · " + esc(h.ent) + "<br>Score " + Math.round(h.score) + " / 100</div>" +
+        "<details><summary>Pourquoi cette base</summary><p>" + esc(reasons(h, hs)) + "</p></details></article>";
+    }).join("");
+
+    $("extras").innerHTML = "<span>Complément : <b>" + list(comp) + "</b></span><span>Outsiders à surveiller : <b>" + list(outs) + "</b></span>";
+
+    $("ranking").innerHTML = r.map(function (h, i) {
+      return '<tr><td class="num">' + (i + 1) + '</td><td class="num">' + h.n + "</td><td>" + esc(h.nom) + "</td><td>" + esc(h.jockey) + '</td><td class="num">' + poidsCell(h) + '</td><td class="num">' + esc(h.mus) + '</td><td class="num">' + esc(h.coteTxt) + '</td><td><span class="scorecell"><span class="bar"><i style="width:' + Math.max(0, Math.min(100, h.score)).toFixed(0) + '%"></i></span>' + Math.round(h.score) + "</span></td></tr>";
+    }).join("");
+
+    // ce que dit le journal
+    var hasApt = info && info.apt && (info.apt.forme.length || info.apt.classe.length);
+    $("facts-card").hidden = !hasApt;
+    if (hasApt) {
+      function nums(a) { return a && a.length ? a.join(" · ") : "—"; }
+      $("facts").innerHTML = [
+        ["Forme", nums(info.apt.forme)], ["Classe", nums(info.apt.classe)],
+        ["Progrès", nums(info.apt.progres)], ["Régularité", nums(info.apt.regularite)],
+        ["Entraîneurs en forme", joinNames(info.enForme && info.enForme.trainers)],
+        ["Jockeys en forme", joinNames(info.enForme && info.enForme.jockeys)]
+      ].map(function (x) { return '<div class="fact"><dt>' + x[0] + "</dt><dd>" + esc(x[1]) + "</dd></div>"; }).join("");
+    }
+
+    // dernier résultat
+    var rs = info && info.result;
+    $("resultat").hidden = !rs;
+    if (rs) {
+      $("res-lead").textContent = "4+1 du " + rs.date + ". Source : Journal Hippique LONAB, PMU'B.";
+      var rows = [["Arrivée", rs.arrivee], ["Ordre", rs.ordre], ["Désordre", rs.desordre], ["Bonus", rs.bonus]].filter(function (x) { return x[1]; });
+      $("res-body").innerHTML = rows.map(function (x) { return "<tr><th>" + x[0] + '</th><td class="num">' + esc(x[1]) + "</td></tr>"; }).join("");
+    }
+  }
+
+  // ---- réglages
+  $("sliders").innerHTML = FACTORS.map(function (f) {
+    return '<div class="slider"><label for="w-' + f.k + '">' + f.label + ' <output id="o-' + f.k + '">' + f.w + '</output></label><input type="range" id="w-' + f.k + '" min="0" max="100" value="' + f.w + '"></div>';
+  }).join("");
+  FACTORS.forEach(function (f) {
+    $("w-" + f.k).addEventListener("input", function (e) {
+      W[f.k] = parseInt(e.target.value, 10) || 0;
+      $("o-" + f.k).textContent = W[f.k];
+      render();
+    });
+  });
+  $("reset-w").addEventListener("click", function () {
+    FACTORS.forEach(function (f) { W[f.k] = f.w; $("w-" + f.k).value = f.w; $("o-" + f.k).textContent = f.w; });
+    render();
+  });
+
+  // ---- import du journal PDF
+  function setStatus(t) { $("status").textContent = t; }
+  function showErr(t) { var e = $("err"); e.textContent = t; e.hidden = !t; }
+
+  function importPdf(file) {
+    showErr(""); setStatus("");
+    $("file-name").textContent = file.name;
+    if (!/\.pdf$/i.test(file.name) && file.type !== "application/pdf") { showErr("Ce fichier n'est pas un PDF."); return; }
+    if (!window.pdfjsLib) { showErr("Le lecteur PDF n'a pas pu se charger. Rechargez la page ou utilisez la saisie manuelle."); return; }
+    try { pdfjsLib.GlobalWorkerOptions.workerSrc = "pdf.worker.min.js"; } catch (e) {}
+    setStatus("Lecture du journal…");
+    var fr = new FileReader();
+    fr.onerror = function () { setStatus(""); showErr("Le fichier n'a pas pu être ouvert."); };
+    fr.onload = function () {
+      pdfjsLib.getDocument({ data: new Uint8Array(fr.result) }).promise.then(function (doc) {
+        var pages = [], chain = Promise.resolve();
+        function add(p) {
+          chain = chain.then(function () { return doc.getPage(p); }).then(function (page) {
+            return page.getTextContent().then(function (tc) {
+              pages.push({
+                width: page.view[2] - page.view[0],
+                items: tc.items.filter(function (i) { return i.str && i.str.trim(); }).map(function (i) { return { s: i.str, x: i.transform[4], y: i.transform[5] }; })
+              });
+            });
+          });
+        }
+        for (var p = 1; p <= doc.numPages; p++) add(p);
+        return chain.then(function () { return pages; });
+      }).then(function (pages) {
+        var res = parseJournal(pages);
+        if (!res.ok) { setStatus(""); showErr("Ce PDF ne ressemble pas au journal hippique de la LONAB : " + res.error.toLowerCase()); return; }
+        state.race = res.race; state.horses = res.horses; state.info = res;
+        setStatus("Journal lu : " + res.race.titre + ", " + res.horses.length + " partants. Les bases sont calculées.");
+        render();
+        $("pronostic").scrollIntoView();
+      }).catch(function () {
+        setStatus(""); showErr("Le PDF n'a pas pu être lu. Vérifiez qu'il s'agit bien du journal (pas d'une photo ou d'un scan) ou utilisez la saisie manuelle.");
+      });
+    };
+    fr.readAsArrayBuffer(file);
+  }
+  $("in-pdf").addEventListener("change", function (e) { if (e.target.files && e.target.files[0]) importPdf(e.target.files[0]); });
+  var drop = $("drop");
+  ["dragenter", "dragover"].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add("over"); }); });
+  ["dragleave", "drop"].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove("over"); }); });
+  drop.addEventListener("drop", function (e) { var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) importPdf(f); });
+
+  // ---- saisie manuelle (secours)
+  var DEFAULT_CSV = DEFAULT_DATA.horses.map(function (h) {
+    return [h.n, h.nom, h.jockey, h.ent, kg(h.poids), h.mus, h.gains, h.cotes.map(function (c) { return c + "/1"; })[0]].join(";");
+  }).join("\n");
+  $("in-data").value = DEFAULT_CSV;
+
+  function parseCsv(txt) {
+    var rows = [], errs = [];
+    txt.split(/\r?\n/).forEach(function (line, i) {
+      line = line.trim();
+      if (!line) return;
+      var p = line.split(line.indexOf(";") > -1 ? ";" : "\t").map(function (x) { return x.trim(); });
+      if (p.length < 8) { errs.push("Ligne " + (i + 1) + " : 8 colonnes attendues, " + p.length + " trouvées."); return; }
+      var c = num(p[7].split("/")[0]);
+      var h = { n: parseInt(p[0], 10), nom: p[1], jockey: p[2], ent: p[3], poids: num(p[4]), mus: p[5].toUpperCase(), gains: num(p[6]), cotes: [c], cote: c, coteTxt: c + "/1" };
+      if (!(h.n > 0) || isNaN(h.poids) || isNaN(h.gains) || isNaN(c)) { errs.push("Ligne " + (i + 1) + " : valeur illisible (numéro, poids, gains ou cote)."); return; }
+      rows.push(h);
+    });
+    return { horses: rows, errs: errs };
+  }
+  $("run").addEventListener("click", function () {
+    var res = parseCsv($("in-data").value);
+    if (res.errs.length || res.horses.length < 4) { showErr(res.errs.length ? res.errs[0] : "Il faut au moins 4 partants pour calculer des bases."); return; }
+    showErr(""); setStatus("");
+    state.horses = res.horses; state.info = null;
+    state.race = { jeu: "Analyse manuelle", titre: $("in-titre").value.trim() || "Course sans titre", details: $("in-details").value.trim() || res.horses.length + " partants", arret: "" };
+    render();
+    $("pronostic").scrollIntoView();
+  });
+  $("reset-data").addEventListener("click", function () {
+    $("file-name").textContent = "Aucun fichier choisi. Vous pouvez aussi déposer le PDF ici.";
+    $("in-pdf").value = "";
+    showErr(""); setStatus("");
+    selectCourse(pickCourse());
+  });
+
+  function csvOf(hs) {
+    return hs.map(function (h) { return [h.n, h.nom, h.jockey, h.ent, kg(h.poids), h.mus, h.gains, h.cotes.map(function (c) { return c + "/1"; })[0]].join(";"); }).join("\n");
+  }
+  function selectCourse(c) {
+    DEFAULT_DATA = c; state.race = c.race; state.horses = c.horses; state.info = c;
+    $("in-titre").value = c.race.titre; $("in-details").value = c.race.details; $("in-data").value = csvOf(c.horses);
+    renderDays(); render();
+  }
+  function fr1(x) { return x.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+  function renderBilan() {
+    var rows = BILAN.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var n = rows.length;
+    $("bilan-sum").hidden = !n; $("bilan-box").hidden = !n;
+    if (!n) { $("bilan-lead").textContent = "Le bilan se remplira dès que l'arrivée d'une course analysée sera publiée dans le journal suivant."; return; }
+    $("bilan-lead").textContent = "Pour chaque course, les bases calculées par le site sont comparées à l'arrivée officielle. Ce sont des résultats passés, sans garantie pour l'avenir.";
+    var hb = 0, hs = 0, h5 = 0, eb = 0, es = 0, e5 = 0;
+    rows.forEach(function (b) {
+      hb += b.hitsBases; hs += b.hitsSel; h5 += b.hitsTop5;
+      eb += b.bases.length * 5 / b.partants;
+      es += (b.bases.length + b.comp.length + b.outs.length) * 5 / b.partants;
+      e5 += 25 / b.partants;
+    });
+    $("bilan-facts").innerHTML = [
+      ["Courses suivies", String(n)],
+      ["Bases dans les 5 premiers", hb + " sur " + 3 * n + " · au hasard : " + fr1(eb)],
+      ["Arrivés dans la sélection", hs + " sur " + 5 * n + " · au hasard : " + fr1(es)],
+      ["Arrivés dans nos 5 premiers", h5 + " sur " + 5 * n + " · au hasard : " + fr1(e5)]
+    ].map(function (x) { return '<div class="fact"><dt>' + x[0] + "</dt><dd>" + esc(x[1]) + "</dd></div>"; }).join("");
+    $("bilan-body").innerHTML = rows.map(function (b) {
+      var lab = new Date(b.date + "T12:00:00Z").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+      var arr = b.arrivee.map(function (x) {
+        return b.bases.indexOf(x) > -1 ? '<b class="hit">' + x + "</b>" : (b.comp.indexOf(x) > -1 || b.outs.indexOf(x) > -1 ? '<span class="near">' + x + "</span>" : String(x));
+      }).join(" · ");
+      return "<tr><td>" + esc(lab) + (b.calib ? " *" : "") + "</td><td>" + esc(b.race) + '</td><td class="num">' + b.bases.join(" · ") + '</td><td class="num">' + arr + '</td><td class="num">' + b.hitsBases + " sur " + b.bases.length + "</td></tr>";
+    }).join("");
+  }
+
+  function renderDays() {
+    var t = todayIso(), tm = new Date(Date.now() + 864e5).toISOString().slice(0, 10), el = $("days");
+    el.hidden = COURSES.length < 2;
+    el.innerHTML = COURSES.map(function (c, i) {
+      var lab = new Date(c.date + "T12:00:00Z").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+      var tag = c.date === t ? "Aujourd'hui · " : (c.date === tm ? "Demain · " : "");
+      return '<button type="button" class="day" data-i="' + i + '" aria-pressed="' + (c === DEFAULT_DATA) + '">' + tag + lab + "</button>";
+    }).join("");
+  }
+  $("days").addEventListener("click", function (e) { var b = e.target.closest(".day"); if (b) selectCourse(COURSES[+b.getAttribute("data-i")]); });
+
+  $("in-titre").value = DEFAULT_DATA.race.titre; $("in-details").value = DEFAULT_DATA.race.details;
+  renderDays();
+  renderBilan();
+  render();
+})();
+</script>
