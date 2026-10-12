@@ -381,5 +381,15 @@
   ],
   "source": "journal du 2026-10-13",
   "auto": true
+ },
+ "2026-10-12": {
+  "arrivee": [
+   2,
+   10,
+   14,
+   11,
+   12
+  ],
+  "source": "communiquée par Félix"
  }
 }
