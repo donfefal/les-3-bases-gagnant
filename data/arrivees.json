@@ -370,5 +370,16 @@
   ],
   "source": "journal du 2026-09-04",
   "auto": true
+ },
+ "2026-10-09": {
+  "arrivee": [
+   14,
+   6,
+   15,
+   7,
+   10
+  ],
+  "source": "journal du 2026-10-13",
+  "auto": true
  }
 }
