@@ -401,5 +401,16 @@
    1
   ],
   "source": "communiquée par Félix"
+ },
+ "2026-10-14": {
+  "arrivee": [
+   10,
+   15,
+   13,
+   5,
+   9
+  ],
+  "source": "journal du 2026-10-16",
+  "auto": true
  }
 }
