@@ -120,7 +120,7 @@ function parseJournal(pages) {
     if (found) return;
     var ls = pjLines(pg.items.filter(function (i) { return i.x > pg.width * 0.5; }), 3);
     for (var k = 0; k < ls.length; k++) {
-      var m = ls[k].text.match(/^\W*(?:4\+1|QUART[ÉE]|QUINT[ÉE]\+?|TIERC[ÉE])\W*\s+(?:SP[ÉE]CIAL\s+)?DU\s+(LUNDI|MARDI|MERCREDI|JEUDI|VENDREDI|SAMEDI|DIMANCHE)\s+(\d{1,2})\s+([A-ZÉÛ]+)\s+(\d{4})/i);
+      var m = ls[k].text.match(/^\W*(?:SP[ÉE]CIAL\s+)?\W*(?:4\+1|QUART[ÉE]|QUINT[ÉE]\+?|TIERC[ÉE])\W*\s+(?:SP[ÉE]CIAL\s+)?DU\s+(LUNDI|MARDI|MERCREDI|JEUDI|VENDREDI|SAMEDI|DIMANCHE)\s+(\d{1,2})\s+([A-ZÉÛ]+)\s+(\d{4})/i);
       if (!m) continue;
       found = true;
       race.jeu = (/QUART[ÉE]/i.test(ls[k].text) ? "Quarté" : /TIERC[ÉE]/i.test(ls[k].text) ? "Tiercé" : /QUINT[ÉE]/i.test(ls[k].text) ? "Quinté+" : "4+1") + " · " + m[1].toLowerCase() + " " + m[2] + " " + m[3].toLowerCase() + " " + m[4];
