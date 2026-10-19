@@ -1,0 +1,30 @@
+name: Collecte de l'historique
+
+on:
+  schedule:
+    - cron: "30 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mise-a-jour
+  cancel-in-progress: false
+
+jobs:
+  collecte:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/collect-history.cjs --jours 45
+      - name: Publier l'historique
+        run: |
+          git config user.name "Les 3 Bases Gagnant"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A data/history
+          git diff --cached --quiet || (git commit -m "Historique des courses" && git pull --rebase -X theirs origin main && git push)
