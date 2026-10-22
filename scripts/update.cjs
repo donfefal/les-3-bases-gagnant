@@ -163,8 +163,19 @@ async function main() {
       }
     }
   }
+  // Complète une arrivée de 4 numéros (5e place absente du journal) avec l'historique PMU collecté
+  function completer(iso, nums) {
+    try {
+      const f = path.join(__dirname, "..", "data", "history", iso.slice(0, 7) + ".json.gz");
+      if (!fs.existsSync(f)) return nums;
+      const rows = JSON.parse(require("zlib").gunzipSync(fs.readFileSync(f)).toString()).filter((x) => x.date === iso);
+      const ok = rows.filter((x) => x.arr.length >= 5 && nums.every((n, i) => x.arr[i] === String(n)) && /^\d+$/.test(x.arr[4]));
+      return ok.length === 1 ? nums.concat([+ok[0].arr[4]]) : nums;
+    } catch (e) { return nums; }
+  }
   Array.from(archive.values()).forEach((c) => {
     (c.arrivals || []).forEach((a) => {
+      if (a.nums.length === 4) a = { iso: a.iso, nums: completer(a.iso, a.nums) };
       const old = arrivees[a.iso];
       if (a.nums.length >= 5 && (!old || (old.auto && old.arrivee.length < a.nums.length))) {
         arrivees[a.iso] = { arrivee: a.nums, source: "journal du " + c.date, auto: true };
