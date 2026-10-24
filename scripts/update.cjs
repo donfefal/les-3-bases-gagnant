@@ -199,6 +199,11 @@ async function main() {
     bilan.push(b);
     console.log("Bilan ajouté pour le " + k + " : arrivée " + arr.join("-"));
   });
+  bilan.forEach((b) => {
+    if (b.conf !== undefined) return;
+    const c = archive.get(b.date);
+    b.conf = c ? (E.basesConfiance(JSON.parse(JSON.stringify(c.horses))) || {}).niveau || null : null;
+  });
   bilan.sort((a, b) => (a.date < b.date ? -1 : 1));
   fs.writeFileSync(ARR, JSON.stringify(arrivees, null, 1));
   fs.writeFileSync(BIL, JSON.stringify(bilan));

@@ -81,6 +81,24 @@ function basesPicks(hs, info, W) {
   return { ranked: r, top: top, comp: comp, outs: outs };
 }
 
+
+// Indice de confiance : plus le marché se concentre sur 3 chevaux, plus les bases ont réussi dans le passé.
+// Seuils et taux mesurés sur plus de 6 000 courses PMU (cotes de référence), séparés selon la taille du champ.
+var BASES_CONFIANCE = {
+  gros: { min: 13, seuils: [0.40, 0.49], taux: [51, 57, 72] },
+  petit: { min: 0, seuils: [0.58, 0.685], taux: [67, 77, 83] }
+};
+function basesConfiance(hs) {
+  var ip = hs.filter(function (h) { return h.cote > 0 && h.cote < 400; }).map(function (h) { return 1 / (h.cote + 1); });
+  if (ip.length < 8 || ip.length < 0.8 * hs.length) return null;
+  var tot = ip.reduce(function (a, b) { return a + b; }, 0);
+  ip.sort(function (a, b) { return b - a; });
+  var p3 = (ip[0] + ip[1] + ip[2]) / tot;
+  var set = hs.length >= BASES_CONFIANCE.gros.min ? BASES_CONFIANCE.gros : BASES_CONFIANCE.petit;
+  var i = p3 < set.seuils[0] ? 0 : p3 < set.seuils[1] ? 1 : 2;
+  return { niveau: ["faible", "moyenne", "forte"][i], taux: set.taux[i], hasard: Math.round(500 / hs.length), p3: Math.round(p3 * 100) / 100 };
+}
+
 // Compare les choix du site à l'arrivée officielle (les cinq premiers numéros).
 function basesBilan(course, arrivee, W) {
   var hs = JSON.parse(JSON.stringify(course.horses));
@@ -91,10 +109,11 @@ function basesBilan(course, arrivee, W) {
   return {
     date: course.date, race: course.race.titre, partants: hs.length,
     bases: bases, comp: comp, outs: outs, arrivee: arr,
+    conf: (basesConfiance(hs) || {}).niveau || null,
     hitsBases: inter(bases, arr), hitsSel: inter(bases.concat(comp, outs), arr), hitsTop5: inter(nums(p.ranked.slice(0, 5)), arr)
   };
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { BASES_FACTORS: BASES_FACTORS, BASES_APT: BASES_APT, basesAnalyse: basesAnalyse, basesPicks: basesPicks, basesBilan: basesBilan, basesWeights: basesWeights };
+  module.exports = { BASES_FACTORS: BASES_FACTORS, BASES_APT: BASES_APT, basesAnalyse: basesAnalyse, basesPicks: basesPicks, basesBilan: basesBilan, basesConfiance: basesConfiance, basesWeights: basesWeights };
 }

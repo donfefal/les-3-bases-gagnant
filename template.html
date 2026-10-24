@@ -71,6 +71,13 @@ h3 { text-wrap: balance; }
 .tag { display: inline-block; font-family: var(--mono); font-size: .75rem; padding: 3px 8px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); background: var(--surface); }
 
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.confiance { padding: 12px 20px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .92rem; }
+.confiance[hidden] { display: none; }
+.confiance .niv { font-family: var(--mono); font-size: .8rem; padding: 3px 10px; border-radius: 3px; border: 1px solid var(--line); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+.confiance .niv.forte { background: #1f7a3d; color: #fff; border-color: #1f7a3d; }
+.confiance .niv.moyenne { background: #c9892b; color: #fff; border-color: #c9892b; }
+.confiance .niv.faible { background: #8a3b3b; color: #fff; border-color: #8a3b3b; }
+.confiance .why { color: var(--muted); }
 .race-head { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; align-items: baseline; padding: 16px 20px; border-bottom: 1px solid var(--line); }
 .race-head strong { font-family: var(--display); font-size: 1.4rem; text-transform: uppercase; letter-spacing: .02em; }
 .race-meta { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
@@ -171,6 +178,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
 
       <div class="card">
         <div class="race-head" id="race-head"></div>
+        <div class="confiance" id="confiance" hidden></div>
         <div class="bases" id="bases"></div>
         <div class="extras" id="extras"></div>
       </div>
@@ -192,6 +200,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       <h2>Bilan des bases</h2>
       <p class="lead" id="bilan-lead"></p>
       <div class="card" id="bilan-sum" hidden><dl class="facts" id="bilan-facts"></dl></div>
+      <p class="hint" id="bilan-conf" style="margin-top:12px" hidden></p>
       <div class="tablebox" id="bilan-box" hidden>
         <table>
           <thead><tr><th>Date</th><th>Course</th><th>Nos bases</th><th>Arrivée</th><th>Bases trouvées</th></tr></thead>
@@ -372,6 +381,10 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
 
     $("race-head").innerHTML = "<strong>" + esc(RC.titre) + '</strong><span class="race-meta">' + esc(RC.details) + (RC.arret ? " · " + esc(RC.arret) : "") + "</span>";
 
+    var cf = basesConfiance(hs);
+    $("confiance").hidden = !cf;
+    if (cf) $("confiance").innerHTML = '<span>Confiance dans les bases</span><span class="niv ' + cf.niveau + '">' + cf.niveau + '</span><span class="why">Dans les courses où le marché était aussi concentré, les 3 bases du marché ont placé en moyenne <b>' + cf.taux + ' %</b> de leurs chevaux dans les 5 premiers (au hasard : ' + cf.hasard + ' %). Mesure sur plus de 6 000 courses, sans garantie pour celle-ci.</span>';
+
     $("bases").innerHTML = top.map(function (h, i) {
       return '<article class="base"><div class="cloth k' + (i + 1) + '">' + h.n + "</div><h3>" + esc(h.nom) + '</h3><div class="who">' + esc(h.jockey) + " · " + esc(h.ent) + "<br>Score " + Math.round(h.score) + " / 100</div>" +
         "<details><summary>Pourquoi cette base</summary><p>" + esc(reasons(h, hs)) + "</p></details></article>";
@@ -533,6 +546,13 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       ["Arrivés dans la sélection", hs + " sur " + 5 * n + " · au hasard : " + fr1(es)],
       ["Arrivés dans nos 5 premiers", h5 + " sur " + 5 * n + " · au hasard : " + fr1(e5)]
     ].map(function (x) { return '<div class="fact"><dt>' + x[0] + "</dt><dd>" + esc(x[1]) + "</dd></div>"; }).join("");
+    var gp = { faible: [0, 0, 0], moyenne: [0, 0, 0], forte: [0, 0, 0] };
+    rows.forEach(function (b) { if (b.conf && gp[b.conf]) { gp[b.conf][0]++; gp[b.conf][1] += b.hitsBases; gp[b.conf][2] += b.bases.length; } });
+    var parts = ["forte", "moyenne", "faible"].filter(function (k) { return gp[k][0]; }).map(function (k) {
+      return "confiance " + k + " : " + gp[k][1] + " bases arrivées dans les 5 premiers sur " + gp[k][2] + " (" + Math.round(100 * gp[k][1] / gp[k][2]) + " %, " + gp[k][0] + " courses)";
+    });
+    $("bilan-conf").hidden = !parts.length;
+    if (parts.length) $("bilan-conf").textContent = "Selon l'indice de confiance : " + parts.join(" · ") + ". Peu de courses : à confirmer avec le temps.";
     $("bilan-body").innerHTML = rows.map(function (b) {
       var lab = new Date(b.date + "T12:00:00Z").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
       var arr = b.arrivee.map(function (x) {
