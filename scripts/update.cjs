@@ -11,6 +11,9 @@ const E = require("../engine.js");
 const ROOT = path.join(__dirname, "..");
 const DATA = path.join(ROOT, "data", "journals.json");
 const BASE = "https://lonab.bf/sites/default/files/";
+const DIAG = [];
+const _log = console.log;
+console.log = function () { const l = Array.prototype.join.call(arguments, " "); DIAG.push(l); _log.apply(console, arguments); };
 const UA = "LesTroisBasesGagnant/1.0 (lecture du journal hippique public)";
 const KEEP_DAYS = 14;
 const LOOKAHEAD_DAYS = 2;
@@ -28,7 +31,10 @@ function candidates(d) {
     const f = t.getUTCFullYear() + "-" + pad(t.getUTCMonth() + 1);
     if (folders.indexOf(f) === -1) folders.push(f);
   }
-  return folders.map((f) => BASE + f + "/" + name);
+  const names = [name, name.replace(".pdf", "_0.pdf"), name.replace(".pdf", "_1.pdf"), name.replace(".pdf", "_2.pdf")];
+  const out = [];
+  names.forEach((nm) => folders.forEach((f) => out.push(BASE + f + "/" + nm)));
+  return out;
 }
 
 async function download(url) {
@@ -194,6 +200,7 @@ async function main() {
   bilan.sort((a, b) => (a.date < b.date ? -1 : 1));
   fs.writeFileSync(ARR, JSON.stringify(arrivees, null, 1));
   fs.writeFileSync(BIL, JSON.stringify(bilan));
+  if (!offline) fs.writeFileSync(path.join(ROOT, "data", "diagnostic.txt"), "Dernière exécution : " + new Date().toISOString() + "\n" + DIAG.filter((l) => !/polyfill|Require stack|^- /.test(l)).join("\n") + "\n");
   const arch = Array.from(archive.values()).sort((a, b) => (a.date < b.date ? -1 : 1));
   fs.writeFileSync(ARCH, JSON.stringify(arch));
 
