@@ -495,5 +495,50 @@
   ],
   "source": "journal du 2026-10-22",
   "auto": true
+ },
+ "2026-10-24": {
+  "arrivee": [
+   9,
+   4,
+   7
+  ],
+  "source": "résultats lonab.bf",
+  "auto": true,
+  "jeu": "Tiercé"
+ },
+ "2026-10-23": {
+  "arrivee": [
+   15,
+   12,
+   6,
+   14,
+   16
+  ],
+  "source": "résultats lonab.bf",
+  "auto": true,
+  "jeu": "4+1"
+ },
+ "2026-10-22": {
+  "arrivee": [
+   12,
+   5,
+   9,
+   7,
+   3
+  ],
+  "source": "résultats lonab.bf",
+  "auto": true,
+  "jeu": "Quarté"
+ },
+ "2026-10-21": {
+  "arrivee": [
+   13,
+   12,
+   10,
+   4,
+   2
+  ],
+  "source": "journal du 2026-10-25",
+  "auto": true
  }
 }

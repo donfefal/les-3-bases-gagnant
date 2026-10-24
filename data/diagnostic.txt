@@ -1,4 +1,4 @@
-Dernière exécution : 2026-10-24T23:01:05.243Z
+Dernière exécution : 2026-10-24T23:04:29.220Z
 → journaux/c55cdcd9-JH_PMUB_DU_15-10-2026.pdf
   OK 2026-10-15 · Chantilly · Prix de la Vierge de Lorette (16 partants)
 → journal du 2026-10-24
@@ -6,30 +6,28 @@ Dernière exécution : 2026-10-24T23:01:05.243Z
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_24-10-2026_0.pdf
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_24-10-2026_1.pdf
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_24-10-2026_2.pdf
-  introuvable (pas encore publié ?)
+  OK 2026-10-24 · Compiegne · Prix de Beaune (15 partants)
 → journal du 2026-10-25
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_25-10-2026.pdf
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_25-10-2026_0.pdf
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_25-10-2026_1.pdf
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_25-10-2026_2.pdf
-  introuvable (pas encore publié ?)
+  OK 2026-10-25 · Saint-Cloud · Prix de L'Elevage (16 partants)
 → journal du 2026-10-26
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_26-10-2026.pdf
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_26-10-2026_0.pdf
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_26-10-2026_1.pdf
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_26-10-2026_2.pdf
-  introuvable (pas encore publié ?)
-→ résultat 2026-10-24 (41)
-  404  https://lonab.bf/sites/default/files/2026-10/Res41_24_10_2026.pdf
-→ résultat 2026-10-24 (QUARTE)
-  404  https://lonab.bf/sites/default/files/2026-10/Res_24_10_2026_QUARTE.pdf
+  OK 2026-10-26 · Chantilly · Prix de la Route des Princes (16 partants)
 → résultat 2026-10-24 (TIERCE)
-  texte lu mais arrivée introuvable :  TIERCE DU SAMEDI 24/10/2026 ARR : 9 - 4 - 7 NPO:00 NP:00 GAINS ORDRE : 13 500 4 065 DESORDRE : 1 000 44 785 MAP TIERCE : 99 662 500 GAINS GAGNANT : 8 000 1 290 PLACE A : 2 000 2 226 PLACE B : 3 000 1
+  OK arrivée 9-4-7
 → résultat 2026-10-23 (41)
-  texte lu mais arrivée introuvable :  ''4+1'' DU VENDREDI 23/10/2026 ARR : 15 - 12 - 6 - 14 - 16 NPO : 00 NP:00 GAINS NOMBRE GAGNANTS ORDRE : 64 393 500 1 DESORDRE : 1 287 500 13 BONUS : 64 000 2 156 MAP "4+1" : 219 115 000 GAINS NOMBRE 
+  OK arrivée 15-12-6-14-16
 → résultat 2026-10-23 (QUARTE)
   404  https://lonab.bf/sites/default/files/2026-10/Res_23_10_2026_QUARTE.pdf
 → résultat 2026-10-23 (TIERCE)
   404  https://lonab.bf/sites/default/files/2026-10/Res_23_10_2026_TIERCE.pdf
 → résultat 2026-10-22 (QUARTE)
-  texte lu mais arrivée introuvable :  QUARTE DU JEUDI 22/10/2026 ARR : 12 - 5 - 9 - 7 NPO :00 NP: 00 GAINS ORDRE : 396 500 125 DESORDRE : 8 000 9 083 MAP QUARTE : 122 226 500 GAINS GAGNANT : 27 500 583 PLACE A : 8 500 920 PLACE B : 5 500
+  OK arrivée 12-5-9-7
+Bilan ajouté pour le 2026-10-21 : arrivée 13-12-10-4-2
+Bilan ajouté pour le 2026-10-22 : arrivée 12-5-9-7-3
