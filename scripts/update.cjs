@@ -31,7 +31,9 @@ function candidates(d) {
     const f = t.getUTCFullYear() + "-" + pad(t.getUTCMonth() + 1);
     if (folders.indexOf(f) === -1) folders.push(f);
   }
-  const names = [name, name.replace(".pdf", "_0.pdf"), name.replace(".pdf", "_1.pdf"), name.replace(".pdf", "_2.pdf")];
+  const base = [name, name.replace("PMUB_DU", "PMU_DU")];
+  const names = [];
+  base.forEach((b) => ["", "_0", "_1", "_2"].forEach((sfx) => names.push(b.replace(".pdf", sfx + ".pdf"))));
   const out = [];
   names.forEach((nm) => folders.forEach((f) => out.push(BASE + f + "/" + nm)));
   return out;
@@ -79,7 +81,7 @@ async function readResult(buf) {
     txt += " " + tc.items.map((i) => i.str).join(" ");
   }
   txt = txt.replace(/\s+/g, " ");
-  const a = txt.match(/Arriv[ée]e\s*:?\s*((?:\d{1,2}\s*[-–]\s*)+\d{1,2})/i);
+  const a = txt.match(/(?:Arriv[ée]e|\bARR)\s*:?\s*((?:\d{1,2}\s*[-–]\s*)+\d{1,2})/i);
   const dm = txt.match(/(\d{2})\/(\d{2})\/(\d{4})/);
   if (!a || !dm) { console.log("  texte lu mais arrivée introuvable : " + txt.slice(0, 200)); return null; }
   return { iso: dm[3] + "-" + dm[2] + "-" + dm[1], nums: a[1].split(/\s*[-–]\s*/).map(Number) };
@@ -162,7 +164,7 @@ async function main() {
           try { r = await readResult(b); } catch (e) { console.log("  PDF illisible : " + e.message); }
           if (r && r.iso === key && r.nums.length >= 3) {
             const old = arrivees[key];
-            if (!old || old.auto && old.arrivee.length < r.nums.length) arrivees[key] = { arrivee: r.nums, source: "résultats lonab.bf", auto: true, jeu: Object.keys(GAMES).find((k) => GAMES[k] === game) };
+            if (!old || old.auto && old.arrivee.length < r.nums.length) arrivees[key] = { arrivee: r.nums.length === 4 ? completer(key, r.nums) : r.nums, source: "résultats lonab.bf", auto: true, jeu: Object.keys(GAMES).find((k) => GAMES[k] === game) };
             console.log("  OK arrivée " + r.nums.join("-"));
           }
         }
