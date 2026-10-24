@@ -109,7 +109,7 @@ async function main() {
     jobs.push({ label: f, load: async () => ({ buf: new Uint8Array(fs.readFileSync(f)), url: "" }) });
   });
   const offline = process.argv.indexOf("--offline") > -1;
-  for (let off = 0; off <= (offline ? -1 : LOOKAHEAD_DAYS); off++) {
+  for (let off = -4; off <= (offline ? -5 : LOOKAHEAD_DAYS); off++) {
     const d = new Date(today.getTime() + off * 864e5);
     const key = iso(d);
     if (byDate.has(key) && byDate.get(key).auto) continue;
