@@ -109,6 +109,16 @@ function basesConfiance(hs) {
   return { niveau: ["faible", "moyenne", "forte"][i], taux: set.taux[i], hasard: Math.round(500 / hs.length), p3: Math.round(p3 * 100) / 100 };
 }
 
+// Chevaux à écarter : cotes très élevées. Sur plus de 4 000 courses PMU de 13 partants et plus, un cheval à 70/1 et plus
+// finit dans les 5 premiers 8 % du temps, un cheval entre 40/1 et 70/1 environ 12 % (au hasard : 33 %).
+// Seuils en cote « x/1 » : le journal affiche 69/1 là où l'historique PMU note 70 (mise comprise).
+var BASES_ECART = { fort: 69, faible: 39 };
+function basesEcarts(hs) {
+  var fort = hs.filter(function (h) { return h.cote >= BASES_ECART.fort && h.cote < 400; });
+  var faible = hs.filter(function (h) { return h.cote >= BASES_ECART.faible && h.cote < BASES_ECART.fort; });
+  return { fort: fort, faible: faible };
+}
+
 // Compare les choix du site à l'arrivée officielle (les cinq premiers numéros).
 function basesBilan(course, arrivee, W) {
   var hs = JSON.parse(JSON.stringify(course.horses));
@@ -125,5 +135,5 @@ function basesBilan(course, arrivee, W) {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { BASES_FACTORS: BASES_FACTORS, BASES_APT: BASES_APT, basesAnalyse: basesAnalyse, basesPicks: basesPicks, basesBilan: basesBilan, basesPlan: basesPlan, basesConfiance: basesConfiance, basesWeights: basesWeights };
+  module.exports = { BASES_FACTORS: BASES_FACTORS, BASES_APT: BASES_APT, basesAnalyse: basesAnalyse, basesPicks: basesPicks, basesBilan: basesBilan, basesPlan: basesPlan, basesConfiance: basesConfiance, basesEcarts: basesEcarts, basesWeights: basesWeights };
 }

@@ -78,6 +78,10 @@ h3 { text-wrap: balance; }
 .confiance .niv.moyenne { background: #c9892b; color: #fff; border-color: #c9892b; }
 .confiance .niv.faible { background: #8a3b3b; color: #fff; border-color: #8a3b3b; }
 .confiance .why { color: var(--muted); }
+.ecarts { padding: 12px 20px; border-top: 1px solid var(--line); font-size: .92rem; }
+.ecarts[hidden] { display: none; }
+.ecarts p { margin: 4px 0; }
+.ecarts .hint { margin-top: 6px; }
 .race-head { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; align-items: baseline; padding: 16px 20px; border-bottom: 1px solid var(--line); }
 .race-head strong { font-family: var(--display); font-size: 1.4rem; text-transform: uppercase; letter-spacing: .02em; }
 .race-meta { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
@@ -181,6 +185,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
         <div class="confiance" id="confiance" hidden></div>
         <div class="bases" id="bases"></div>
         <div class="extras" id="extras"></div>
+        <div class="ecarts" id="ecarts" hidden></div>
       </div>
 
       <div class="tablebox">
@@ -392,6 +397,13 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
     }).join("");
 
     $("extras").innerHTML = "<span>Champ réduit " + plan.jeu + " : <b>" + plan.nb + " bases</b> à fixer, à compléter avec le complément</span><span>Complément : <b>" + list(comp) + "</b></span><span>Outsiders à surveiller : <b>" + list(outs) + "</b></span>";
+
+    var ec = basesEcarts(hs), inSel = top.concat(comp);
+    function ecList(a) { return a.filter(function (h) { return inSel.indexOf(h) === -1; }).map(function (h) { return h.n; }).join(" · ") || "aucun"; }
+    var nEc = ec.fort.length + ec.faible.length;
+    $("ecarts").hidden = false;
+    if (!nEc) $("ecarts").innerHTML = "<p><b>Chevaux à écarter</b> : aucun cheval à 39/1 ou plus dans cette course. Le champ est serré, il n'y a pas de faux cheval évident à écarter par les cotes.</p>";
+    else $("ecarts").innerHTML = "<p><b>À écarter en priorité</b> (cote de 69/1 et plus) : <b>" + ecList(ec.fort) + "</b></p><p><b>Très peu probables</b> (cote de 39/1 à 68/1) : <b>" + ecList(ec.faible) + '</b></p><p class="hint">Dans les courses de 13 partants et plus, un cheval à 69/1 et plus finit dans les 5 premiers 8 % du temps, un cheval entre 39/1 et 68/1 environ 12 % (au hasard : 33 %). Écarter les cotes de 69/1 et plus évite en moyenne 1 à 2 faux chevaux et ne gêne l\'arrivée que 12 % du temps. Ce n\'est jamais impossible : l\'arrivée peut contenir un outsider.</p>';
 
     $("ranking").innerHTML = r.map(function (h, i) {
       return '<tr><td class="num">' + (i + 1) + '</td><td class="num">' + h.n + "</td><td>" + esc(h.nom) + "</td><td>" + esc(h.jockey) + '</td><td class="num">' + poidsCell(h) + '</td><td class="num">' + esc(h.mus) + '</td><td class="num">' + esc(h.coteTxt) + '</td><td><span class="scorecell"><span class="bar"><i style="width:' + Math.max(0, Math.min(100, h.score)).toFixed(0) + '%"></i></span>' + Math.round(h.score) + "</span></td></tr>";
