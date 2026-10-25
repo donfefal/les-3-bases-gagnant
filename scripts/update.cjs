@@ -171,6 +171,26 @@ async function main() {
       }
     }
   }
+  // Rapports officiels : récupère le texte des résultats des courses déjà analysées (25 par passage, les plus récentes d'abord)
+  if (process.argv.indexOf("--offline") === -1) {
+    let faits = 0;
+    const dates = Array.from(archive.keys()).sort().reverse();
+    for (const key of dates) {
+      if (faits >= 25) break;
+      const c = archive.get(key), e = arrivees[key];
+      const g = c && GAMES[String(c.race.jeu).split(" ·")[0]];
+      if (!g || !e || e.rapports || key >= iso(today)) continue;
+      faits++;
+      const d = new Date(key + "T12:00:00Z");
+      for (const u of resultUrls(d, g)) {
+        const b = await download(u);
+        if (!b) continue;
+        let r = null;
+        try { r = await readResult(b); } catch (err) { console.log("  PDF illisible : " + err.message); }
+        if (r && r.iso === key) { e.rapports = r.texte; console.log("→ rapports " + key + " (" + g + ") OK"); break; }
+      }
+    }
+  }
   // Complète une arrivée de 4 numéros (5e place absente du journal) avec l'historique PMU collecté
   function completer(iso, nums) {
     try {
