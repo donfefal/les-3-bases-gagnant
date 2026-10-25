@@ -1,4 +1,4 @@
-Dernière exécution : 2026-10-25T10:59:15.705Z
+Dernière exécution : 2026-10-25T12:09:30.466Z
 → journaux/c55cdcd9-JH_PMUB_DU_15-10-2026.pdf
   OK 2026-10-15 · Chantilly · Prix de la Vierge de Lorette (16 partants)
 → journal du 2026-10-27
@@ -15,3 +15,28 @@ Dernière exécution : 2026-10-25T10:59:15.705Z
   404  https://lonab.bf/sites/default/files/2026-10/Res41_25_10_2026.pdf
 → résultat 2026-10-24 (TIERCE)
   OK arrivée 9-4-7
+→ rapports 2026-10-24 (TIERCE) OK
+→ rapports 2026-10-23 (41) OK
+→ rapports 2026-10-22 (QUARTE) OK
+→ rapports 2026-10-21 (41) OK
+→ rapports 2026-10-20 (QUARTE) OK
+→ rapports 2026-10-19 (QUARTE) OK
+→ rapports 2026-10-18 (41) OK
+→ rapports 2026-10-17 (TIERCE) OK
+→ rapports 2026-10-16 (41) OK
+  404  https://lonab.bf/sites/default/files/2026-10/Res41_15_10_2026.pdf
+→ rapports 2026-10-14 (41) OK
+→ rapports 2026-10-13 (QUARTE) OK
+→ rapports 2026-10-12 (QUARTE) OK
+→ rapports 2026-10-11 (41) OK
+→ rapports 2026-10-09 (41) OK
+→ rapports 2026-10-08 (QUARTE) OK
+→ rapports 2026-10-07 (41) OK
+→ rapports 2026-10-06 (QUARTE) OK
+→ rapports 2026-10-05 (QUARTE) OK
+→ rapports 2026-10-04 (41) OK
+→ rapports 2026-10-02 (41) OK
+→ rapports 2026-10-01 (QUARTE) OK
+→ rapports 2026-09-30 (41) OK
+→ rapports 2026-09-21 (QUARTE) OK
+→ rapports 2026-09-20 (41) OK
