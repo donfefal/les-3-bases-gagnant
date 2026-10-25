@@ -84,7 +84,7 @@ async function readResult(buf) {
   const a = txt.match(/(?:Arriv[ée]e|\bARR)\s*:?\s*((?:\d{1,2}\s*[-–]\s*)+\d{1,2})/i);
   const dm = txt.match(/(\d{2})\/(\d{2})\/(\d{4})/);
   if (!a || !dm) { console.log("  texte lu mais arrivée introuvable : " + txt.slice(0, 200)); return null; }
-  return { iso: dm[3] + "-" + dm[2] + "-" + dm[1], nums: a[1].split(/\s*[-–]\s*/).map(Number) };
+  return { iso: dm[3] + "-" + dm[2] + "-" + dm[1], nums: a[1].split(/\s*[-–]\s*/).map(Number), texte: txt.slice(0, 700) };
 }
 
 async function main() {
@@ -164,7 +164,7 @@ async function main() {
           try { r = await readResult(b); } catch (e) { console.log("  PDF illisible : " + e.message); }
           if (r && r.iso === key && r.nums.length >= 3) {
             const old = arrivees[key];
-            if (!old || old.auto && old.arrivee.length < r.nums.length) arrivees[key] = { arrivee: r.nums.length === 4 ? completer(key, r.nums) : r.nums, source: "résultats lonab.bf", auto: true, jeu: Object.keys(GAMES).find((k) => GAMES[k] === game) };
+            if (!old || old.auto && old.arrivee.length < r.nums.length) arrivees[key] = { arrivee: r.nums.length === 4 ? completer(key, r.nums) : r.nums, source: "résultats lonab.bf", auto: true, rapports: r.texte, jeu: Object.keys(GAMES).find((k) => GAMES[k] === game) };
             console.log("  OK arrivée " + r.nums.join("-"));
           }
         }
