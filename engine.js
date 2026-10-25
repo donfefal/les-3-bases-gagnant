@@ -74,6 +74,16 @@ function basesAnalyse(hs, info, W) {
   return hs.slice().sort(function (a, b) { return b.score - a.score; });
 }
 
+
+// Champ réduit : nombre de bases à fixer et de chevaux de complément selon le jeu (méthode de jeu du site).
+function basesPlan(jeu) {
+  var g = String(jeu || "").split(" ·")[0];
+  if (/QUART/i.test(g)) return { nb: 3, cs: 5, jeu: "Quarté" };
+  if (/TIERC/i.test(g)) return { nb: 2, cs: 4, jeu: "Tiercé" };
+  if (/QUINT/i.test(g)) return { nb: 4, cs: 6, jeu: "Quinté+" };
+  return { nb: 4, cs: 6, jeu: "4+1" };
+}
+
 // Trois bases, complément (rangs 4 à 6) et outsiders (cote d'au moins 20/1).
 function basesPicks(hs, info, W) {
   var r = basesAnalyse(hs, info, W), top = r.slice(0, 3), rest = r.slice(3), comp = rest.slice(0, 3);
@@ -115,5 +125,5 @@ function basesBilan(course, arrivee, W) {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { BASES_FACTORS: BASES_FACTORS, BASES_APT: BASES_APT, basesAnalyse: basesAnalyse, basesPicks: basesPicks, basesBilan: basesBilan, basesConfiance: basesConfiance, basesWeights: basesWeights };
+  module.exports = { BASES_FACTORS: BASES_FACTORS, BASES_APT: BASES_APT, basesAnalyse: basesAnalyse, basesPicks: basesPicks, basesBilan: basesBilan, basesPlan: basesPlan, basesConfiance: basesConfiance, basesWeights: basesWeights };
 }

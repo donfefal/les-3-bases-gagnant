@@ -163,8 +163,8 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
     <div class="hero">
       <div>
         <div class="eyebrow" id="eyebrow">4+1</div>
-        <h1>Trois bases. Une lecture claire de la course.</h1>
-        <p>Le journal hippique de la LONAB passe dans une grille d'analyse qui note chaque partant sur sa forme, le marché, ses gains, son poids, les aptitudes relevées et l'entourage. Les trois meilleurs scores deviennent les bases du jour.</p>
+        <h1>Vos bases. Une lecture claire de la course.</h1>
+        <p>Le journal hippique de la LONAB passe dans une grille d'analyse qui note chaque partant sur sa forme, le marché, ses gains, son poids, les aptitudes relevées et l'entourage. Les meilleurs scores deviennent les bases du jour.</p>
         <a class="btn" href="#pronostic">Voir les bases du jour</a>
       </div>
       <div class="cloths" id="hero-cloths"></div>
@@ -368,15 +368,16 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
   function render() {
     var hs = state.horses, RC = state.race, info = state.info;
     var r = analyse(hs);
-    var top = r.slice(0, 3), rest = r.slice(3);
-    var comp = rest.slice(0, 3);
+    var plan = basesPlan(RC.jeu);
+    var top = r.slice(0, plan.nb), rest = r.slice(plan.nb);
+    var comp = rest.slice(0, plan.cs);
     var outs = rest.filter(function (h) { return h.cote >= 20 && comp.indexOf(h) === -1; }).slice(0, 3);
 
     $("eyebrow").textContent = RC.jeu;
     $("th-poids").textContent = isTrot() ? "Distance" : "Poids";
-    $("hero-cloths").setAttribute("aria-label", "Les trois bases : " + top.map(function (h) { return h.n; }).join(", "));
+    $("hero-cloths").setAttribute("aria-label", "Les " + plan.nb + " bases : " + top.map(function (h) { return h.n; }).join(", "));
     $("hero-cloths").innerHTML = top.map(function (h, i) {
-      return '<div class="cloth k' + (i + 1) + '">' + h.n + "<small>base " + (i + 1) + "</small></div>";
+      return '<div class="cloth k' + Math.min(i + 1, 3) + '">' + h.n + "<small>base " + (i + 1) + "</small></div>";
     }).join("");
 
     $("race-head").innerHTML = "<strong>" + esc(RC.titre) + '</strong><span class="race-meta">' + esc(RC.details) + (RC.arret ? " · " + esc(RC.arret) : "") + "</span>";
@@ -386,11 +387,11 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
     if (cf) $("confiance").innerHTML = '<span>Confiance dans les bases</span><span class="niv ' + cf.niveau + '">' + cf.niveau + '</span><span class="why">Dans les courses où le marché était aussi concentré, les 3 bases du marché ont placé en moyenne <b>' + cf.taux + ' %</b> de leurs chevaux dans les 5 premiers (au hasard : ' + cf.hasard + ' %). Mesure sur plus de 6 000 courses, sans garantie pour celle-ci.</span>';
 
     $("bases").innerHTML = top.map(function (h, i) {
-      return '<article class="base"><div class="cloth k' + (i + 1) + '">' + h.n + "</div><h3>" + esc(h.nom) + '</h3><div class="who">' + esc(h.jockey) + " · " + esc(h.ent) + "<br>Score " + Math.round(h.score) + " / 100</div>" +
+      return '<article class="base"><div class="cloth k' + Math.min(i + 1, 3) + '">' + h.n + "</div><h3>" + esc(h.nom) + '</h3><div class="who">' + esc(h.jockey) + " · " + esc(h.ent) + "<br>Score " + Math.round(h.score) + " / 100</div>" +
         "<details><summary>Pourquoi cette base</summary><p>" + esc(reasons(h, hs)) + "</p></details></article>";
     }).join("");
 
-    $("extras").innerHTML = "<span>Complément : <b>" + list(comp) + "</b></span><span>Outsiders à surveiller : <b>" + list(outs) + "</b></span>";
+    $("extras").innerHTML = "<span>Champ réduit " + plan.jeu + " : <b>" + plan.nb + " bases</b> à fixer, à compléter avec le complément</span><span>Complément : <b>" + list(comp) + "</b></span><span>Outsiders à surveiller : <b>" + list(outs) + "</b></span>";
 
     $("ranking").innerHTML = r.map(function (h, i) {
       return '<tr><td class="num">' + (i + 1) + '</td><td class="num">' + h.n + "</td><td>" + esc(h.nom) + "</td><td>" + esc(h.jockey) + '</td><td class="num">' + poidsCell(h) + '</td><td class="num">' + esc(h.mus) + '</td><td class="num">' + esc(h.coteTxt) + '</td><td><span class="scorecell"><span class="bar"><i style="width:' + Math.max(0, Math.min(100, h.score)).toFixed(0) + '%"></i></span>' + Math.round(h.score) + "</span></td></tr>";
