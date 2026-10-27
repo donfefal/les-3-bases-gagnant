@@ -1,10 +1,19 @@
-Dernière exécution : 2026-10-26T20:56:08.821Z
+Dernière exécution : 2026-10-27T11:49:30.926Z
 → journaux/c55cdcd9-JH_PMUB_DU_15-10-2026.pdf
   OK 2026-10-15 · Chantilly · Prix de la Vierge de Lorette (16 partants)
-→ journal du 2026-10-28
-  OK 2026-10-28 · Auteuil · Prix Santo Pietro (15 partants)
+→ journal du 2026-10-29
+  404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_29-10-2026.pdf
+  404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_29-10-2026_0.pdf
+  404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_29-10-2026_1.pdf
+  404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_29-10-2026_2.pdf
+  404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_29-10-2026.pdf
+  404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_29-10-2026_0.pdf
+  404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_29-10-2026_1.pdf
+  404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_29-10-2026_2.pdf
+  introuvable (pas encore publié ?)
+→ résultat 2026-10-27 (41)
+  404  https://lonab.bf/sites/default/files/2026-10/Res41_27_10_2026.pdf
 → résultat 2026-10-26 (QUARTE)
   OK arrivée 12-3-10-13
-→ résultat 2026-10-24 (TIERCE)
-  OK arrivée 9-4-7
   404  https://lonab.bf/sites/default/files/2026-10/Res41_15_10_2026.pdf
+Bilan ajouté pour le 2026-10-26 : arrivée 12-3-10-13-9
