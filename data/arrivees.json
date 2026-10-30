@@ -637,11 +637,10 @@
    14,
    10,
    5,
-   3
+   3,
+   12
   ],
-  "source": "résultats lonab.bf",
-  "auto": true,
-  "rapports": " QUARTE DU JEUDI 29/10/2026 ARR : 14 - 10 - 5 - 3 NPO :00 NP: 00 GAINS ORDRE : 337 000 155 DESORDRE : 10 500 7 444 MAP QUARTE : 130 397 000 GAINS GAGNANT : 35 000 375 PLACE A : 7 500 836 PLACE B : 5 500 1 150 PLACE C : 5 500 1 138 MAP COUPLES : 31 979 000 MAP GENERALE : 162 376 000 NOMBRE GAGNANTS NOMBRE GAGNANTS 29/10/2026",
-  "jeu": "Quarté"
+  "source": "journal du 2026-10-31",
+  "auto": true
  }
 }
