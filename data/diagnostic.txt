@@ -1,4 +1,4 @@
-Dernière exécution : 2026-11-02T15:08:11.688Z
+Dernière exécution : 2026-11-02T23:21:52.161Z
 → journaux/c55cdcd9-JH_PMUB_DU_15-10-2026.pdf
   OK 2026-10-15 · Chantilly · Prix de la Vierge de Lorette (16 partants)
 → journal du 2026-10-29
@@ -12,23 +12,7 @@ Dernière exécution : 2026-11-02T15:08:11.688Z
   404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_29-10-2026_2.pdf
   introuvable (pas encore publié ?)
 → journal du 2026-11-04
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_04-11-2026.pdf
-  404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_04-11-2026.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_04-11-2026_0.pdf
-  404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_04-11-2026_0.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_04-11-2026_1.pdf
-  404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_04-11-2026_1.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_04-11-2026_2.pdf
-  404  https://lonab.bf/sites/default/files/2026-10/JH_PMUB_DU_04-11-2026_2.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_04-11-2026.pdf
-  404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_04-11-2026.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_04-11-2026_0.pdf
-  404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_04-11-2026_0.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_04-11-2026_1.pdf
-  404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_04-11-2026_1.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_04-11-2026_2.pdf
-  404  https://lonab.bf/sites/default/files/2026-10/JH_PMU_DU_04-11-2026_2.pdf
-  introuvable (pas encore publié ?)
+  OK 2026-11-04 · Nantes · Grand National du Trot (12ème Etape du G. N. T. ) (13 partants)
 → résultat 2026-11-02 (QUARTE)
   OK arrivée 1-5-3-6
 → résultat 2026-10-31 (TIERCE)
