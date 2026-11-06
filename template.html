@@ -77,6 +77,7 @@ h3 { text-wrap: balance; }
 
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
 .confiance { padding: 12px 20px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .92rem; }
+.dist { font-family: var(--mono); font-size: .78rem; color: var(--muted); }
 .confiance[hidden] { display: none; }
 .confiance .niv { font-family: var(--mono); font-size: .8rem; padding: 3px 10px; border-radius: 3px; border: 1px solid var(--line); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
 .confiance .niv.forte { background: #1f7a3d; color: #fff; border-color: #1f7a3d; }
@@ -593,7 +594,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       if (v.length) $("gains-lead").textContent += " Variante « favoris + 1 tocard » (au 4+1 : 3 favoris du marché + 1 outsider de rang 6 à 10, mêmes compléments) : " + vn + " courses gagnées sur " + v.length + ", " + F(vg) + " gagnés pour " + F(v.reduce(function (a, b) { return a + b.champ.mise; }, 0)) + " misés. Sur 11 000 courses passées, elle gagne moins souvent que les favoris seuls.";
       $("gains-body").innerHTML = gl.map(function (b) {
         var c = b.champ;
-        return "<tr><td>" + b.date.slice(8) + "/" + b.date.slice(5, 7) + "</td><td>" + c.jeu + "</td><td>" + F(c.mise) + "</td><td>" + (c.gagne ? "<b>Gagné</b>" : "Perdu") + "</td><td>" + (c.rapport != null ? F(c.rapport) : "—") + "</td><td>" + (c.gagne ? "<b>" + F(c.rapport) + "</b>" : "0 F") + "</td></tr>";
+        return "<tr><td>" + b.date.slice(8) + "/" + b.date.slice(5, 7) + "</td><td>" + c.jeu + (b.dist ? '<br><span class="dist">' + esc(b.dist) + "</span>" : "") + "</td><td>" + F(c.mise) + "</td><td>" + (c.gagne ? "<b>Gagné</b>" : "Perdu") + "</td><td>" + (c.rapport != null ? F(c.rapport) : "—") + "</td><td>" + (c.gagne ? "<b>" + F(c.rapport) + "</b>" : "0 F") + "</td></tr>";
       }).join("");
       var fv = { a: [0, 0], b: [0, 0], c: [0, 0] };
       rows.forEach(function (b) {
@@ -610,7 +611,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       var arr = b.arrivee.map(function (x) {
         return b.bases.indexOf(x) > -1 ? '<b class="hit">' + x + "</b>" : (b.comp.indexOf(x) > -1 || b.outs.indexOf(x) > -1 ? '<span class="near">' + x + "</span>" : String(x));
       }).join(" · ");
-      return "<tr><td>" + esc(lab) + (b.calib ? " *" : "") + "</td><td>" + esc(b.race) + '</td><td class="num">' + b.bases.join(" · ") + '</td><td class="num">' + arr + '</td><td class="num">' + b.hitsBases + " sur " + b.bases.length + "</td></tr>";
+      return "<tr><td>" + esc(lab) + (b.calib ? " *" : "") + "</td><td>" + esc(b.race) + (b.dist ? '<br><span class="dist">' + esc(b.dist) + "</span>" : "") + '</td><td class="num">' + b.bases.join(" · ") + '</td><td class="num">' + arr + '</td><td class="num">' + b.hitsBases + " sur " + b.bases.length + "</td></tr>";
     }).join("");
   }
 
@@ -619,7 +620,8 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
     $("arriv-body").innerHTML = ARRIVEES.map(function (a) {
       var lab = new Date(a.date + "T12:00:00Z").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
       var arr = a.arrivee.map(function (x) { return a.bases && a.bases.indexOf(x) > -1 ? '<b class="hit">' + x + "</b>" : String(x); }).join(" · ");
-      return "<tr><td>" + esc(lab) + "</td><td>" + esc(a.jeu || "") + '</td><td class="num">' + arr + '</td><td class="num">' + (a.bases ? a.bases.join(" · ") : "—") + "</td></tr>";
+      var bd = BILAN.filter(function (z) { return z.date === a.date; })[0];
+      return "<tr><td>" + esc(lab) + "</td><td>" + esc(a.jeu || "") + (bd && bd.dist ? '<br><span class="dist">' + esc(bd.dist) + "</span>" : "") + '</td><td class="num">' + arr + '</td><td class="num">' + (a.bases ? a.bases.join(" · ") : "—") + "</td></tr>";
     }).join("");
   }
 

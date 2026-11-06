@@ -237,6 +237,8 @@ async function main() {
   bilan.forEach((b) => {
     const c = archive.get(b.date), e = arrivees[b.date];
     if (!c || !e) return;
+    const dm = String(c.race.details || "").match(/^([^·]+?)\s*·\s*([\d\s]+\s*m)\b/);
+    if (dm) b.dist = dm[1].trim() + " · " + dm[2].replace(/\s+/g, " ").replace(/(\d) m$/, "$1 m").trim();
     const jeu = String(c.race.jeu).split(" ·")[0], cfg = CHAMP[jeu];
     const hs = JSON.parse(JSON.stringify(c.horses));
     const top5 = e.arrivee.slice(0, 5);
