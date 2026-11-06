@@ -247,6 +247,15 @@ async function main() {
     const gagne = bases.every((x) => top.indexOf(x) >= 0) && top.filter((x) => bases.indexOf(x) < 0).every((x) => comp.indexOf(x) >= 0);
     const rap = desordreRapport(e.rapports);
     b.champ = { jeu, bases, comp, mise: cfg.C * MISE, gagne, rapport: rap };
+    // Variante : (B-1) favoris du marché + 1 tocard (meilleur du modèle parmi les rangs 6 à 10 par cote)
+    const byCote = hs.filter((h) => h.cote > 0).sort((x, y) => x.cote - y.cote).map((h) => h.n);
+    const favs = byCote.slice(0, cfg.B - 1), pool = byCote.slice(5, 10);
+    const toc = rk.find((x) => pool.indexOf(x) >= 0);
+    if (toc != null) {
+      const b2 = favs.concat([toc]), c2 = rk.filter((x) => b2.indexOf(x) < 0).slice(0, cfg.C);
+      const g2 = b2.every((x) => top.indexOf(x) >= 0) && top.filter((x) => b2.indexOf(x) < 0).every((x) => c2.indexOf(x) >= 0);
+      b.champ2 = { bases: b2, comp: c2, gagne: g2 };
+    }
   });
   bilan.sort((a, b) => (a.date < b.date ? -1 : 1));
   fs.writeFileSync(ARR, JSON.stringify(arrivees, null, 1));
