@@ -224,6 +224,30 @@ async function main() {
     const c = archive.get(b.date);
     b.conf = c ? (E.basesConfiance(JSON.parse(JSON.stringify(c.horses))) || {}).niveau || null : null;
   });
+  // « Si vous aviez joué » : champ réduit (bases du site + compléments), mise de 300 F par combinaison, gain = rapport du désordre.
+  const CHAMP = { "4+1": { B: 4, k: 5, C: 6 }, "Quarté": { B: 3, k: 4, C: 5 }, "Tiercé": { B: 2, k: 3, C: 4 } };
+  const MISE = 300;
+  function desordreRapport(txt) {
+    const m = (txt || "").match(/DESORDRE\s*:\s*([\d ]+?)\s*(?:QUARTE V|TIERCE V|BONUS|MAP|NOMBRE|GAINS|$)/);
+    if (!m) return null;
+    const t = m[1].trim().split(/\s+/);
+    for (let j = 1; j < t.length; j++) if (/00$/.test(t[j])) return +t.slice(0, j + 1).join("");
+    return t.length >= 2 && /00$/.test(t[0]) ? +t[0] : null;
+  }
+  bilan.forEach((b) => {
+    const c = archive.get(b.date), e = arrivees[b.date];
+    if (!c || !e) return;
+    const jeu = String(c.race.jeu).split(" ·")[0], cfg = CHAMP[jeu];
+    const hs = JSON.parse(JSON.stringify(c.horses));
+    const top5 = e.arrivee.slice(0, 5);
+    b.fav3 = hs.filter((h) => h.cote > 0).sort((x, y) => x.cote - y.cote).slice(0, 3).filter((h) => top5.indexOf(h.n) >= 0).length;
+    if (!cfg || e.arrivee.length < cfg.k) return;
+    const rk = E.basesPicks(hs, c, E.basesWeights()).ranked.map((h) => h.n);
+    const bases = rk.slice(0, cfg.B), comp = rk.slice(cfg.B, cfg.B + cfg.C), top = e.arrivee.slice(0, cfg.k);
+    const gagne = bases.every((x) => top.indexOf(x) >= 0) && top.filter((x) => bases.indexOf(x) < 0).every((x) => comp.indexOf(x) >= 0);
+    const rap = desordreRapport(e.rapports);
+    b.champ = { jeu, bases, comp, mise: cfg.C * MISE, gagne, rapport: rap };
+  });
   bilan.sort((a, b) => (a.date < b.date ? -1 : 1));
   fs.writeFileSync(ARR, JSON.stringify(arrivees, null, 1));
   fs.writeFileSync(BIL, JSON.stringify(bilan));

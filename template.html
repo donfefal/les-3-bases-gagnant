@@ -213,6 +213,15 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       <p class="lead" id="bilan-lead"></p>
       <div class="card" id="bilan-sum" hidden><dl class="facts" id="bilan-facts"></dl></div>
       <p class="hint" id="bilan-conf" style="margin-top:12px" hidden></p>
+      <div id="gains" hidden>
+        <h3>Si vous aviez joué</h3>
+        <p class="hint" id="gains-lead"></p>
+        <div class="tablebox"><table>
+          <thead><tr><th>Date</th><th>Jeu</th><th>Mise</th><th>Résultat</th><th>Désordre payé</th><th>Gain</th></tr></thead>
+          <tbody id="gains-body"></tbody>
+        </table></div>
+        <p class="hint" id="gains-fav" style="margin-top:12px"></p>
+      </div>
       <div class="tablebox" id="bilan-box" hidden>
         <table>
           <thead><tr><th>Date</th><th>Course</th><th>Nos bases</th><th>Arrivée</th><th>Bases trouvées</th></tr></thead>
@@ -573,6 +582,26 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
     });
     $("bilan-conf").hidden = !parts.length;
     if (parts.length) $("bilan-conf").textContent = "Selon l'indice de confiance : " + parts.join(" · ") + ". Peu de courses : à confirmer avec le temps.";
+    var gl = rows.filter(function (b) { return b.champ && (!b.champ.gagne || b.champ.rapport != null); });
+    $("gains").hidden = !gl.length;
+    if (gl.length) {
+      var tm = 0, tg = 0, nw = 0, F = function (x) { return String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " F"; };
+      gl.forEach(function (b) { tm += b.champ.mise; if (b.champ.gagne) { nw++; tg += b.champ.rapport; } });
+      $("gains-lead").textContent = "Champ réduit joué à chaque course (4 bases + 6 compléments au 4+1 ; 3 bases + 5 compléments au Quarté ; 2 bases + 4 compléments au Tiercé), à 300 F la combinaison, payé au rapport officiel du désordre. Sur " + gl.length + " courses : " + F(tm) + " misés, " + F(tg) + " gagnés (" + nw + " courses gagnées), solde " + (tg - tm >= 0 ? "+" : "−") + F(Math.abs(tg - tm)) + ". Résultats passés, sans garantie : quelques gros rapports suffisent à changer le total.";
+      $("gains-body").innerHTML = gl.map(function (b) {
+        var c = b.champ;
+        return "<tr><td>" + b.date.slice(8) + "/" + b.date.slice(5, 7) + "</td><td>" + c.jeu + "</td><td>" + F(c.mise) + "</td><td>" + (c.gagne ? "<b>Gagné</b>" : "Perdu") + "</td><td>" + (c.rapport != null ? F(c.rapport) : "—") + "</td><td>" + (c.gagne ? "<b>" + F(c.rapport) + "</b>" : "0 F") + "</td></tr>";
+      }).join("");
+      var fv = { a: [0, 0], b: [0, 0], c: [0, 0] };
+      rows.forEach(function (b) {
+        if (b.fav3 == null || !b.champ || b.champ.rapport == null) return;
+        var g = b.fav3 >= 3 ? fv.c : b.fav3 === 2 ? fv.b : fv.a; g[0]++; g[1] += b.champ.rapport;
+      });
+      var cf = { faible: [0, 0], moyenne: [0, 0], forte: [0, 0] };
+      rows.forEach(function (b) { if (b.fav3 != null && b.conf && cf[b.conf]) { cf[b.conf][0]++; cf[b.conf][1] += b.fav3; } });
+      var av = function (g) { return g[0] ? F(g[1] / g[0]) + " (" + g[0] + " courses)" : "—"; };
+      $("gains-fav").innerHTML = "<b>Favoris et rapport.</b> Désordre moyen payé selon le nombre de nos 3 favoris du marché dans les 5 premiers : 0 ou 1 favori : " + av(fv.a) + " · 2 favoris : " + av(fv.b) + " · 3 favoris : " + av(fv.c) + ". <b>Course difficile.</b> Nombre moyen de favoris à l'arrivée (sur 3) : confiance forte " + (cf.forte[0] ? (cf.forte[1] / cf.forte[0]).toFixed(1) : "—") + ", moyenne " + (cf.moyenne[0] ? (cf.moyenne[1] / cf.moyenne[0]).toFixed(1) : "—") + ", faible " + (cf.faible[0] ? (cf.faible[1] / cf.faible[0]).toFixed(1) : "—") + ".";
+    }
     $("bilan-body").innerHTML = rows.map(function (b) {
       var lab = new Date(b.date + "T12:00:00Z").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
       var arr = b.arrivee.map(function (x) {
