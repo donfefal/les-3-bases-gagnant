@@ -1,8 +1,6 @@
-Dernière exécution : 2026-11-07T19:59:57.571Z
+Dernière exécution : 2026-11-07T23:36:19.151Z
 → journaux/c55cdcd9-JH_PMUB_DU_15-10-2026.pdf
   OK 2026-10-15 · Chantilly · Prix de la Vierge de Lorette (16 partants)
-→ journal du 2026-11-09
-  OK 2026-11-09 · Bordeaux-Le Bouscat · Grand Prix de L'Hippodrome du Bouscat (15 partants)
 → résultat 2026-11-07 (TIERCE)
   OK arrivée 1-14-9
   404  https://lonab.bf/sites/default/files/2026-10/Res41_15_10_2026.pdf
