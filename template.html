@@ -57,9 +57,9 @@ nav { display: flex; flex-wrap: wrap; gap: 6px 20px; font-weight: 600; font-size
 nav a { text-decoration: none; padding-block: 4px; border-bottom: 2px solid transparent; }
 nav a:hover { border-bottom-color: var(--silk); }
 
-.hero { background: var(--turf); color: var(--turf-fg); border-radius: 6px; padding: clamp(24px, 5vw, 48px); display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: center; }
+.hero { background: var(--turf); color: var(--turf-fg); border-radius: 6px; padding: clamp(20px, 4vw, 32px); display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: center; }
 .eyebrow { font-family: var(--mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--silk); }
-h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 9vw, 4.8rem); line-height: .95; margin: 8px 0 14px; text-transform: uppercase; text-wrap: balance; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1; margin: 8px 0 14px; text-transform: uppercase; text-wrap: balance; }
 .hero p { margin: 0 0 20px; max-width: 34rem; opacity: .92; }
 .btn { display: inline-block; background: var(--silk); color: var(--silk-fg); font: inherit; font-weight: 600; text-decoration: none; padding: 12px 20px; border-radius: 4px; border: 0; cursor: pointer; }
 .btn:hover { filter: brightness(1.08); }
@@ -67,7 +67,7 @@ h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 9vw
 .cloths { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .cloth { width: clamp(76px, 22vw, 108px); aspect-ratio: 3/4; border-radius: 6px; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 12vw, 4.8rem); box-shadow: 0 2px 0 rgba(0,0,0,.25); position: relative; }
 .cloth small { position: absolute; bottom: 8px; font-family: var(--mono); font-size: .62rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
-.k1 { background: var(--c1); color: #fff; } .k2 { background: var(--c2); color: var(--c2-fg); } .k3 { background: var(--c3); color: #fff; }
+.k1 { background: var(--c1); color: #fff; } .k2 { background: var(--c2); color: var(--c2-fg); box-shadow: inset 0 0 0 2px var(--line), 0 2px 0 rgba(0,0,0,.25); } .k3 { background: var(--c3); color: #fff; }
 
 section { padding-block: clamp(36px, 7vw, 64px); }
 h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem, 5vw, 2.6rem); line-height: 1.05; margin: 0 0 8px; text-transform: uppercase; text-wrap: balance; }
@@ -80,9 +80,9 @@ h3 { text-wrap: balance; }
 .dist { font-family: var(--mono); font-size: .78rem; color: var(--muted); }
 .confiance[hidden] { display: none; }
 .confiance .niv { font-family: var(--mono); font-size: .8rem; padding: 3px 10px; border-radius: 3px; border: 1px solid var(--line); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
-.confiance .niv.forte { background: #1f7a3d; color: #fff; border-color: #1f7a3d; }
-.confiance .niv.moyenne { background: #c9892b; color: #fff; border-color: #c9892b; }
-.confiance .niv.faible { background: #8a3b3b; color: #fff; border-color: #8a3b3b; }
+.confiance .niv.forte { background: var(--turf); color: var(--turf-fg); border-color: var(--turf); }
+.confiance .niv.moyenne { background: var(--silk); color: var(--silk-fg); border-color: var(--silk); }
+.confiance .niv.faible { background: transparent; color: var(--danger); border-color: var(--danger); }
 .confiance .why { color: var(--muted); }
 .ecarts { padding: 12px 20px; border-top: 1px solid var(--line); font-size: .92rem; }
 .ecarts[hidden] { display: none; }
@@ -105,6 +105,7 @@ h3 { text-wrap: balance; }
 .tablebox { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-top: 16px; }
 table { border-collapse: collapse; width: 100%; min-width: 42rem; font-size: .95rem; }
 th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td:nth-child(2) { white-space: normal; min-width: 12rem; }
 th { font-family: var(--mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
 td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 tr:last-child td { border-bottom: 0; }
@@ -144,7 +145,8 @@ textarea { font-family: var(--mono); font-size: .8rem; line-height: 1.5; min-hei
 details.manual summary { cursor: pointer; font-weight: 600; }
 details.manual .field { margin-top: 12px; }
 
-.days { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+.days { display: flex; gap: 8px; margin: 0 0 16px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.day { flex: none; }
 .day { font: inherit; font-weight: 600; font-size: .9rem; padding: 8px 14px; border-radius: 4px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
 .day[aria-pressed="true"] { background: var(--turf); color: var(--turf-fg); border-color: var(--turf); }
 .hit { background: var(--turf); color: var(--turf-fg); border-radius: 3px; padding: 0 6px; }
@@ -175,8 +177,8 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
     <div class="hero">
       <div>
         <div class="eyebrow" id="eyebrow">4+1</div>
-        <h1>Vos bases. Une lecture claire de la course.</h1>
-        <p>Le journal hippique de la LONAB passe dans une grille d'analyse qui note chaque partant sur sa forme, le marché, ses gains, son poids, les aptitudes relevées et l'entourage. Les meilleurs scores deviennent les bases du jour.</p>
+        <h1>Les bases du jour</h1>
+        <p>Chaque partant du journal LONAB est noté sur sa forme, sa cote et ses gains. Les trois meilleures notes donnent les bases.</p>
         <a class="btn" href="#pronostic">Voir les bases du jour</a>
       </div>
       <div class="cloths" id="hero-cloths"></div>
@@ -633,6 +635,8 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       var tag = c.date === t ? "Aujourd'hui · " : (c.date === tm ? "Demain · " : "");
       return '<button type="button" class="day" data-i="' + i + '" aria-pressed="' + (c === DEFAULT_DATA) + '">' + tag + lab + "</button>";
     }).join("");
+    var on = el.querySelector('[aria-pressed="true"]');
+    if (on) el.scrollLeft = on.offsetLeft - el.clientWidth / 2 + on.offsetWidth / 2;
   }
   $("days").addEventListener("click", function (e) { var b = e.target.closest(".day"); if (b) selectCourse(COURSES[+b.getAttribute("data-i")]); });
 
