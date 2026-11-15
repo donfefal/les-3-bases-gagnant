@@ -155,6 +155,19 @@ details.manual .field { margin-top: 12px; }
 .safe h2 { font-size: 1.6rem; }
 .safe p { margin: 0; color: var(--muted); max-width: 44rem; }
 footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var(--muted); font-size: .9rem; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+.legal { background: var(--danger); color: #fff; font-family: var(--mono); font-size: .78rem; line-height: 1.45; letter-spacing: .02em; text-transform: uppercase; padding: 10px 14px; border-radius: 4px; margin-bottom: 12px; }
+:root[data-theme="dark"] .legal { color: #1a0502; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .legal { color: #1a0502; } }
+.legal a { color: inherit; font-weight: 600; }
+.hfilters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 12px 16px; margin: 16px 0; }
+select { width: 100%; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; }
+.heat { display: grid; grid-template-columns: 2rem repeat(20, minmax(1.35rem, 1fr)); gap: 2px; font-family: var(--mono); font-size: .65rem; min-width: 34rem; }
+.heat div { aspect-ratio: 1; display: grid; place-items: center; border-radius: 2px; background: var(--bg); color: var(--muted); }
+.heat .lab { background: none; }
+.heat .pos { background: var(--turf); } .heat .neg { background: var(--danger); }
+.hres { padding: 14px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 10px 20px; }
+.hres b { display: block; font-family: var(--mono); font-weight: 500; font-size: 1.15rem; }
+.hres span { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 @media (prefers-reduced-motion: no-preference) { .btn { transition: filter .15s; } }
 </style>
 </head>
@@ -166,12 +179,15 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
     <nav aria-label="Navigation principale">
       <a href="#pronostic">Pronostic du jour</a>
       <a href="#bilan">Bilan</a>
+      <a href="#historique">Historique</a>
       <a href="#autre">Importer un journal</a>
       <a href="#methode">Méthode</a>
       <a href="#arrivees">Arrivées</a>
       <a href="#resultat">Dernier résultat</a>
     </nav>
   </header>
+
+  <p class="legal" role="note">Les jeux d'argent et de hasard peuvent être dangereux : pertes d'argent, conflits familiaux, addiction… Nos conseils sur <a href="https://www.joueurs-info-service.fr" rel="noopener">joueurs-info-service.fr</a> (09-74-75-13-13 - appel non surtaxé)</p>
 
   <main>
     <div class="hero">
@@ -215,6 +231,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       <h2>Bilan des bases</h2>
       <p class="lead" id="bilan-lead"></p>
       <div class="card" id="bilan-sum" hidden><dl class="facts" id="bilan-facts"></dl></div>
+      <p class="hint" id="bilan-histo" hidden></p>
       <p class="hint" id="bilan-conf" style="margin-top:12px" hidden></p>
       <div id="gains" hidden>
         <h3>Si vous aviez joué</h3>
@@ -276,6 +293,35 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
       </div>
     </section>
 
+    <section id="historique">
+      <h2>Historique</h2>
+      <p class="lead" id="h-disc">Chargement des courses passées…</p>
+      <div class="hfilters">
+        <div class="field"><label for="h-fen">Fenêtre</label><select id="h-fen"><option value="6">6 mois</option><option value="12">12 mois</option><option value="24" selected>24 mois</option></select></div>
+        <div class="field"><label for="h-hip">Hippodrome</label><select id="h-hip"><option value="">Tous</option></select></div>
+        <div class="field"><label for="h-dis">Discipline</label><select id="h-dis"><option value="">Toutes</option></select></div>
+      </div>
+      <div class="tablebox">
+        <table style="min-width:34rem">
+          <thead><tr><th>N°</th><th>Sorties</th><th>Top 5</th><th>Taux</th><th>Au hasard</th><th>Écart moyen</th><th>Dernière</th></tr></thead>
+          <tbody id="h-body"></tbody>
+        </table>
+      </div>
+      <p class="hint" style="margin-top:8px">Taux : part des courses où ce numéro finit dans les 5 premiers. Écart moyen : nombre de courses entre deux arrivées dans les 5. Un taux proche du hasard signifie que le numéro n'apporte rien.</p>
+      <h3 style="margin:28px 0 6px">Co-occurrences</h3>
+      <p class="hint" style="margin:0 0 10px">Deux numéros dans les 5 premiers de la même course. Vert : plus souvent ensemble que le hasard, rouge : moins souvent. Survol ou appui sur une case pour le détail.</p>
+      <div class="tablebox" style="margin-top:0"><div class="heat" id="h-heat" style="padding:12px"></div></div>
+      <p class="hint" id="h-heat-info" style="margin-top:8px"></p>
+      <div class="card" style="margin-top:28px">
+        <div class="panel">
+          <div class="slider"><label for="h-poids">Poids de l'historique dans le score <output id="h-poids-v">0 %</output></label><input type="range" id="h-poids" min="0" max="100" step="5" value="0"></div>
+          <p class="hint">0 % : le pronostic n'utilise pas l'historique (réglage actuel). À 30 %, le score final vaut 70 % de la course du jour et 30 % de l'historique. Les bases du pronostic se recalculent aussitôt.</p>
+          <div class="row"><button class="btn" id="h-bt" type="button">Lancer le backtest</button><span class="status" id="h-bt-st"></span></div>
+        </div>
+        <div class="hres" id="h-bt-res" hidden></div>
+      </div>
+    </section>
+
     <section id="methode">
       <h2>Comment les bases sont choisies</h2>
       <p class="lead">Chaque critère est noté de 0 à 1 pour tous les partants, puis les notes sont pondérées pour donner un score sur 100.</p>
@@ -286,6 +332,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
         <li><h3>Avantage de poids ou de distance</h3><p>Au galop, porter moins de kilos que ses rivaux est un atout dans un handicap. Au trot, un cheval qui part sans recul de distance est avantagé.</p></li>
         <li><h3>Chrono (trot)</h3><p>La meilleure réduction kilométrique indique la vitesse déjà prouvée. Ce critère ne compte qu'au trot.</p></li>
         <li><h3>Aptitudes</h3><p>Le journal classe les cinq meilleurs en forme, en classe, en progrès et en régularité. Chaque citation rapporte des points.</p></li>
+        <li><h3>Historique (en option)</h3><p>Sur les courses passées, le site relève la fréquence d'arrivée de chaque numéro dans les 5 premiers (en général, sur l'hippodrome et dans la discipline), les numéros qui arrivent souvent ensemble et la régularité de leurs sorties. Ce critère est à 0 % par défaut : sur 22 000 courses, il fait à peine mieux que le hasard. Vous pouvez le régler dans la section Historique.</p></li>
         <li><h3>Entourage</h3><p>Un jockey ou un entraîneur bien classé cette semaine, ou signalé en forme, améliore la note.</p></li>
       </ol>
     </section>
@@ -328,6 +375,7 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="parser.js"></script>
 <script src="engine.js"></script>
+<script src="js/historique.js"></script>
 
 <script>
 (function () {
@@ -353,7 +401,27 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
   function isTrot() { return !!(state.race && state.race.type === "trot"); }
   function poidsCell(h) { return isTrot() ? fmt(h.dist || h.poids) + " m" : kg(h.poids) + " kg"; }
 
-  function analyse(hs) { return basesAnalyse(hs, state.info, W); }
+  var HISTO = null, HCOURSES = [], poidsHisto = 0;
+  function discCourse(RC) {
+    var t = norm((RC && RC.details || "").split("·")[0]);
+    return /autostart|attel/.test(t) ? "ATTELE" : /mont/.test(t) ? "MONTE" : /steeple/.test(t) ? "STEEPLECHASE" : /haie/.test(t) ? "HAIE" : /cross/.test(t) ? "CROSS" : /plat/.test(t) ? "PLAT" : "";
+  }
+  function norm(x) { return Historique.norm(x); }
+  function hipCourse(RC) {
+    var t = norm((RC && RC.titre || "").split("·")[0]), best = "";
+    if (HISTO) Object.keys(HISTO.hippodromes || {}).forEach(function (h) { var n = norm(h); if (n.length > 3 && t.indexOf(n) > -1 && n.length > best.length) best = h; });
+    return best;
+  }
+  function analyse(hs) {
+    var r = basesAnalyse(hs, state.info, W);
+    if (poidsHisto > 0 && HISTO && state.race) {
+      var f = Historique.recalculerScoresAvecHistorique(r, hipCourse(state.race), discCourse(state.race), HISTO, poidsHisto);
+      var m = {}; f.forEach(function (x) { m[x.n] = x; });
+      r.forEach(function (h) { h.scoreBase = h.score; h.score = m[h.n].score; });
+      r.sort(function (a, b) { return b.score - a.score; });
+    }
+    return r;
+  }
 
   function rankBy(h, hs, fn, asc) {
     var v = fn(h), r = 1;
@@ -640,8 +708,70 @@ footer { border-top: 1px solid var(--line); padding-block: 24px 32px; color: var
   }
   $("days").addEventListener("click", function (e) { var b = e.target.closest(".day"); if (b) selectCourse(COURSES[+b.getAttribute("data-i")]); });
 
+  // ---- Historique : chargement, filtres, tableau, heatmap, backtest
+  var HSTATS = null, HPAIRES = null, BT0 = null, GAINS_RES = null;
+  function depuisDate(m) { var d = new Date(); d.setMonth(d.getMonth() - m); return d.toISOString().slice(0, 10); }
+  function filtreH() { return { depuis: depuisDate(+$("h-fen").value), hip: $("h-hip").value, disc: $("h-dis").value }; }
+  function pct(x) { return x.toFixed(1).replace(".", ",") + " %"; }
+  function renderHistorique() {
+    if (!HCOURSES.length) return;
+    var f = filtreH(), H = Historique.construire(HCOURSES, f), rows = [], i;
+    $("h-disc").textContent = "Basé sur " + fmt(H.nbCourses) + " courses passées (résultats PMU) — aucune garantie pour la course du jour.";
+    for (i = 1; i <= 20; i++) { var r = Historique.lire(H.global, i); if (r && r.sorties >= 30) rows.push("<tr><td class=\"num\"><b>" + i + "</b></td><td class=\"num\">" + fmt(r.sorties) + "</td><td class=\"num\">" + fmt(r.top5) + "</td><td class=\"num\">" + pct(r.taux) + "</td><td class=\"num\">" + pct(r.hasard) + "</td><td class=\"num\">" + (r.ecart ? r.ecart.toFixed(1).replace(".", ",") : "—") + "</td><td class=\"num\">" + (r.derniere ? r.derniere.slice(8) + "/" + r.derniere.slice(5, 7) : "—") + "</td></tr>"); }
+    $("h-body").innerHTML = rows.join("") || '<tr><td colspan="7">Pas assez de courses avec ces filtres.</td></tr>';
+    var h = '<div class="lab"></div>', a, b;
+    for (b = 1; b <= 20; b++) h += '<div class="lab">' + b + "</div>";
+    for (a = 1; a <= 20; a++) {
+      h += '<div class="lab">' + a + "</div>";
+      for (b = 1; b <= 20; b++) {
+        var p = a === b ? null : Historique.lirePaire(H.global, a, b);
+        if (!p) { h += "<div></div>"; continue; }
+        var d = p.taux - p.hasard, o = Math.min(Math.abs(d) / 3, 1).toFixed(2);
+        h += '<div class="' + (d >= 0 ? "pos" : "neg") + '" style="opacity:' + (0.15 + 0.85 * o) + '" title="' + a + " et " + b + " : " + pct(p.taux) + " (hasard " + pct(p.hasard) + ", " + fmt(p.ensemble) + ' courses)"></div>';
+      }
+    }
+    $("h-heat").innerHTML = h;
+    $("h-heat-info").textContent = "Écarts au hasard de l'ordre de ±1 point : à lire comme du bruit tant qu'ils restent faibles.";
+  }
+  function btHtml(r, note) {
+    var roi = r.roi == null ? "n/d" : (r.roi >= 0 ? "+" : "−") + Math.abs(r.roi).toFixed(0) + " %";
+    return '<div><span>Courses rejouées</span><b>' + fmt(r.courses) + '</b></div><div><span>3 bases dans le top 5</span><b>' + fmt(r.gagnants) + '</b></div><div><span>Taux de réussite</span><b>' + pct(r.tauxReussite) + '</b></div><div><span>Au hasard</span><b>' + pct(r.tauxHasard) + '</b></div><div><span>Bases dans le top 5</span><b>' + pct(r.basesDansTop5) + '</b></div><div><span>Au hasard</span><b>' + pct(r.basesDansTop5Hasard) + '</b></div><div><span>ROI</span><b>' + roi + '</b></div><div><span>Mise / gain total</span><b>' + (r.miseTotale == null ? "n/d" : fmt(r.miseTotale) + " / " + fmt(r.gainTotal) + " F") + '</b></div><p class="hint" style="grid-column:1/-1;margin:0">Résultats passés, sans garantie. Chaque course est notée avec les seules courses qui la précèdent. ' + note + "</p>";
+  }
+  var BT_NOTE = "Le ROI n'est pas calculable ici : l'historique PMU ne contient pas les rapports LONAB. Le solde réel des courses suivies est dans « Si vous aviez joué ».";
+  function lancerBacktest(ui) {
+    if (!HCOURSES.length) return;
+    $("h-bt-st").textContent = "Calcul en cours…";
+    setTimeout(function () {
+      var f = filtreH(), cs = HCOURSES.filter(function (c) { return (!f.hip || c.hip === f.hip) && (!f.disc || c.disc === f.disc); });
+      var r = Historique.backtest(cs, { depuis: f.depuis, nbBases: 3 });
+      $("h-bt-res").hidden = false; $("h-bt-res").innerHTML = btHtml(r, BT_NOTE); $("h-bt-st").textContent = "";
+      if (!f.hip && !f.disc && f.depuis === depuisDate(24)) { BT0 = r; renderBilanHisto(); }
+    }, 30);
+  }
+  function renderBilanHisto() {
+    var el = $("bilan-histo"); if (!el || !BT0) return;
+    el.hidden = false;
+    el.textContent = "Backtest historique (24 mois, résultats PMU, sans garantie) : " + fmt(BT0.courses) + " courses rejouées, 3 bases dans le top 5 dans " + pct(BT0.tauxReussite) + " des cas (hasard : " + pct(BT0.tauxHasard) + "). ROI non calculable sur cet historique ; le solde réel des courses suivies figure dans « Si vous aviez joué ».";
+  }
+  function initHistorique() {
+    var base = "data/";
+    Promise.all(["arrivees_historique", "stats_numeros", "cooccurrences"].map(function (n) { return fetch(base + n + ".json").then(function (r) { if (!r.ok) throw new Error(n); return r.json(); }); })).then(function (a) {
+      HCOURSES = Historique.decoder(a[0]);
+      HISTO = { global: a[1].global, hippodromes: a[1].hippodromes, disciplines: a[1].disciplines, paires: a[2].paires };
+      var cnt = {}; HCOURSES.forEach(function (c) { cnt[c.hip] = (cnt[c.hip] || 0) + 1; });
+      $("h-hip").innerHTML = '<option value="">Tous</option>' + Object.keys(cnt).filter(function (k) { return cnt[k] >= 150; }).sort().map(function (k) { return '<option value="' + esc(k) + '">' + esc(k) + "</option>"; }).join("");
+      $("h-dis").innerHTML = '<option value="">Toutes</option>' + a[0].discs.filter(Boolean).map(function (k) { return '<option value="' + esc(k) + '">' + esc(k.toLowerCase()) + "</option>"; }).join("");
+      renderHistorique(); render();
+      (window.requestIdleCallback || setTimeout)(function () { lancerBacktest(); });
+    }).catch(function () { $("h-disc").textContent = "Données historiques indisponibles (ouvrez le site depuis son adresse en ligne). Le pronostic du jour fonctionne sans elles."; });
+    ["h-fen", "h-hip", "h-dis"].forEach(function (id) { $(id).addEventListener("change", function () { renderHistorique(); }); });
+    $("h-bt").addEventListener("click", function () { lancerBacktest(true); });
+    $("h-poids").addEventListener("input", function () { poidsHisto = +this.value / 100; $("h-poids-v").textContent = this.value + " %"; if (!HISTO) { $("h-disc").textContent = "Les données historiques ne sont pas chargées : le réglage n'a pas d'effet."; } render(); });
+  }
+
   $("in-titre").value = DEFAULT_DATA.race.titre; $("in-details").value = DEFAULT_DATA.race.details;
   renderDays();
+  initHistorique();
   renderBilan();
   renderArrivees();
   render();

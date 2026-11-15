@@ -22,9 +22,10 @@ jobs:
         with:
           node-version: 20
       - run: node scripts/collect-history.cjs --jours 45
+      - run: node scripts/build-historique.cjs
       - name: Publier l'historique
         run: |
           git config user.name "Les 3 Bases Gagnant"
           git config user.email "actions@users.noreply.github.com"
-          git add -A data/history
+          git add -A data/history data/arrivees_historique.json data/stats_numeros.json data/cooccurrences.json data/parcours.json
           git diff --cached --quiet || (git commit -m "Historique des courses" && git pull --rebase -X theirs origin main && git push)
