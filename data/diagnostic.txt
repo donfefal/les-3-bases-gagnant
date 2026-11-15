@@ -1,8 +1,18 @@
-Dernière exécution : 2026-11-14T20:30:23.960Z
+Dernière exécution : 2026-11-15T02:01:14.790Z
 → journaux/c55cdcd9-JH_PMUB_DU_15-10-2026.pdf
   OK 2026-10-15 · Chantilly · Prix de la Vierge de Lorette (16 partants)
-→ journal du 2026-11-16
-  OK 2026-11-16 · Paris-Vincennes · Prix D'Aigues Mortes - Attele (15 partants)
+→ journal du 2026-11-17
+  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_17-11-2026.pdf
+  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_17-11-2026_0.pdf
+  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_17-11-2026_1.pdf
+  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_17-11-2026_2.pdf
+  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_17-11-2026.pdf
+  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_17-11-2026_0.pdf
+  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_17-11-2026_1.pdf
+  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_17-11-2026_2.pdf
+  introuvable (pas encore publié ?)
+→ résultat 2026-11-15 (41)
+  404  https://lonab.bf/sites/default/files/2026-11/Res41_15_11_2026.pdf
 → résultat 2026-11-14 (TIERCE)
   OK arrivée 8-13-5
   404  https://lonab.bf/sites/default/files/2026-10/Res41_15_10_2026.pdf
