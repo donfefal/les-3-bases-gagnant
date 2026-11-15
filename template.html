@@ -401,7 +401,15 @@ select { width: 100%; font: inherit; color: var(--fg); background: var(--surface
   function isTrot() { return !!(state.race && state.race.type === "trot"); }
   function poidsCell(h) { return isTrot() ? fmt(h.dist || h.poids) + " m" : kg(h.poids) + " kg"; }
 
-  var HISTO = null, HCOURSES = [], poidsHisto = 0;
+  var HISTO = null, HCOURSES = [], poidsHisto = 0, PARCOURS = {};
+  function ord(n) { return n === 1 ? "1er" : n + "e"; }
+  function parcoursHtml(h) {
+    var p = PARCOURS[Historique.norm(h.nom)];
+    if (!p || !p.sorties.length) return "";
+    var pl = p.sorties.slice(0, 6).map(function (x) { return x[4] > 0 ? ord(x[4]) + "/" + x[5] : "—"; }).join(", ");
+    var pr = p.progression == null ? "" : p.progression > 0.05 ? " Tendance : en progrès." : p.progression < -0.05 ? " Tendance : en recul." : " Tendance : stable.";
+    return '<p class="hint" style="margin-top:8px">Parcours (' + p.sorties.length + " dernières sorties, de la plus récente à la plus ancienne) : " + esc(pl) + ". Dans les 3 premiers : " + p.top3 + " %." + pr + "</p>";
+  }
   function discCourse(RC) {
     var t = norm((RC && RC.details || "").split("·")[0]);
     return /autostart|attel/.test(t) ? "ATTELE" : /mont/.test(t) ? "MONTE" : /steeple/.test(t) ? "STEEPLECHASE" : /haie/.test(t) ? "HAIE" : /cross/.test(t) ? "CROSS" : /plat/.test(t) ? "PLAT" : "";
@@ -480,7 +488,7 @@ select { width: 100%; font: inherit; color: var(--fg); background: var(--surface
 
     $("bases").innerHTML = top.map(function (h, i) {
       return '<article class="base"><div class="cloth k' + Math.min(i + 1, 3) + '">' + h.n + "</div><h3>" + esc(h.nom) + '</h3><div class="who">' + esc(h.jockey) + " · " + esc(h.ent) + "<br>Score " + Math.round(h.score) + " / 100</div>" +
-        "<details><summary>Pourquoi cette base</summary><p>" + esc(reasons(h, hs)) + "</p></details></article>";
+        "<details><summary>Pourquoi cette base</summary><p>" + esc(reasons(h, hs)) + "</p>" + parcoursHtml(h) + "</details></article>";
     }).join("");
 
     $("extras").innerHTML = "<span>Champ réduit " + plan.jeu + " : <b>" + plan.nb + " bases</b> à fixer, à compléter avec le complément</span><span>Complément : <b>" + list(comp) + "</b></span><span>Outsiders à surveiller : <b>" + list(outs) + "</b></span>";
@@ -755,6 +763,7 @@ select { width: 100%; font: inherit; color: var(--fg); background: var(--surface
   }
   function initHistorique() {
     var base = "data/";
+    fetch("data/parcours.json").then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j) { PARCOURS = j.chevaux || {}; render(); } }).catch(function () {});
     Promise.all(["arrivees_historique", "stats_numeros", "cooccurrences"].map(function (n) { return fetch(base + n + ".json").then(function (r) { if (!r.ok) throw new Error(n); return r.json(); }); })).then(function (a) {
       HCOURSES = Historique.decoder(a[0]);
       HISTO = { global: a[1].global, hippodromes: a[1].hippodromes, disciplines: a[1].disciplines, paires: a[2].paires };
