@@ -1,11 +1,10 @@
-Dernière exécution : 2026-11-22T21:37:28.028Z
+Dernière exécution : 2026-11-23T17:41:42.789Z
 → journaux/c55cdcd9-JH_PMUB_DU_15-10-2026.pdf
   OK 2026-10-15 · Chantilly · Prix de la Vierge de Lorette (16 partants)
-→ journal du 2026-11-24
-  OK 2026-11-24 · Deauville-La Touques · Prix du Chateau de Bayeux (16 partants)
-→ résultat 2026-11-22 (41)
-  OK arrivée 14-10-8-1-16
+→ journal du 2026-11-25
+  OK 2026-11-25 · Deauville-La Touques · Prix de Saint-Ceneri-Le Gerei (16 partants)
+→ résultat 2026-11-23 (QUARTE)
+  OK arrivée 15-13-3-16
 → résultat 2026-11-21 (TIERCE)
   OK arrivée 12-8-1
   404  https://lonab.bf/sites/default/files/2026-10/Res41_15_10_2026.pdf
-Bilan ajouté pour le 2026-11-22 : arrivée 14-10-8-1-16
