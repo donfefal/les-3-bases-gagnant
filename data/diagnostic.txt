@@ -1,16 +1,8 @@
-Dernière exécution : 2026-11-26T02:42:06.638Z
+Dernière exécution : 2026-11-26T16:36:49.016Z
 → journaux/c55cdcd9-JH_PMUB_DU_15-10-2026.pdf
   OK 2026-10-15 · Chantilly · Prix de la Vierge de Lorette (16 partants)
 → journal du 2026-11-28
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_28-11-2026.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_28-11-2026_0.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_28-11-2026_1.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMUB_DU_28-11-2026_2.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_28-11-2026.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_28-11-2026_0.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_28-11-2026_1.pdf
-  404  https://lonab.bf/sites/default/files/2026-11/JH_PMU_DU_28-11-2026_2.pdf
-  introuvable (pas encore publié ?)
+  OK 2026-11-28 · Paris-Vincennes · Prix D'Oraison (16 partants)
 → résultat 2026-11-26 (QUARTE)
-  404  https://lonab.bf/sites/default/files/2026-11/Res_26_11_2026_QUARTE.pdf
+  OK arrivée 8-1-7-15
   404  https://lonab.bf/sites/default/files/2026-10/Res41_15_10_2026.pdf
